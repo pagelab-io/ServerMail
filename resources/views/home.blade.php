@@ -5,4 +5,5 @@
     <h1>Dashboard</h1>
 
     @include('todos.index');
+
 @stop
