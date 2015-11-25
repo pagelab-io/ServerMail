@@ -15,7 +15,6 @@
         </div>
     </div>
 
-
     <div class="row">
         <div class="col-md-4">
             <span ng-show="loading" class="small"><i class="fa fa-spinner fa-spin"></i>Updating...</span>

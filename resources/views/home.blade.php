@@ -5,7 +5,7 @@
     <h1>Dashboard</h1>
     <hr>
 
-    @include('todos.index');
+    @include('todos.index')
 
 @stop
 
