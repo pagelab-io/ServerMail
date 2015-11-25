@@ -1,3 +1,5 @@
+'use strict';
+
 var app = angular.module('todoApp', [], function() { });
 
 app.controller('todoController', function($scope, $http) {
