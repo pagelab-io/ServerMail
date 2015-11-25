@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: PageLab\ServerMail
+        psr4_prefix: PageLab\ServerMail
+        src_path: app
