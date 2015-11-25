@@ -2,7 +2,6 @@
  * App
  */
 (function() {
-
     "use strict";
 
     angular
