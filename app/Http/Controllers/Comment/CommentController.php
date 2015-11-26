@@ -4,6 +4,7 @@ namespace PageLab\ServerMail\Http\Controllers\Comment;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use PageLab\ServerMail\Http\Requests;
 use PageLab\ServerMail\Http\Controllers\Controller;
 use PageLab\ServerMail\Comment;
@@ -30,9 +31,8 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-
-        $validator = $this->validate($request, [
-            'text' => 'required|min:20'
+        $validator = Validator::make($request->all(), [
+            'text' => 'required'
         ]);
 
         if ($validator->fails()){
