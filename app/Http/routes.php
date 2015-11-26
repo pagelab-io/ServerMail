@@ -15,6 +15,12 @@
 $router->get('/', 'WelcomeController@index');
 $router->get('/home', 'HomeController@index');
 
+// Task Routes
+Route::get('/tasks', 'TaskController@index');
+Route::post('/task', 'TaskController@store');
+Route::get('/task/{tasker}', 'TaskController@showTask');
+Route::delete('/task/{tasker}', 'TaskController@destroy');
+
 // Protected routes, only logged in user can access
 $router->group([
     'as'         => 'auth.',
@@ -193,11 +199,18 @@ $router->group([
         'namespace' => 'Todo',
         'prefix' => 'todos'
     ], function($router){
-        //To get event by ID or Code Name
         $router->get('/', 'TodoController@index');
         $router->post('/store', 'TodoController@store');
         $router->put('{id}/update', 'TodoController@update');
         $router->delete('/{id}/delete', 'TodoController@destroy');
+    });
+
+    $router->group([
+        'namespace' => 'Comment',
+        'prefix' => 'comments'
+    ], function($router){
+        $router->get('/', 'CommentController@index');
+        $router->post('/store', 'CommentController@store');
     });
 
 });

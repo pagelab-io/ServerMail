@@ -4,7 +4,7 @@ var app = angular.module('todoApp', [], function() { });
 
 app.controller('todoController', function($scope, $http) {
 
-    $scope.todos = [];
+    $scope.comments = [];
     $scope.loading = true;
 
     $scope.init = function() {
@@ -12,7 +12,7 @@ app.controller('todoController', function($scope, $http) {
 
         setTimeout(function(){
             $http.get('/api/todos').success(function(data, status, headers, config) {
-                $scope.todos = data;
+                $scope.comments = data;
                 $scope.loading = false;
             });
         }, 0);
@@ -26,7 +26,7 @@ app.controller('todoController', function($scope, $http) {
             title: $scope.todo.title,
             done: $scope.todo.done
         }).success(function(data, status, headers, config) {
-            $scope.todos.push(data);
+            $scope.comments.push(data);
             $scope.todo = '';
             $scope.loading = false;
 
@@ -49,12 +49,12 @@ app.controller('todoController', function($scope, $http) {
 
     $scope.deleteTodo = function(index) {
         $scope.loading = true;
-        var todo = $scope.todos[index];
+        var todo = $scope.comments[index];
 
         /* Call server api */
         $http.delete('/api/todos/' + todo.id + '/delete')
             .success(function() {
-                $scope.todos.splice(index, 1);
+                $scope.comments.splice(index, 1);
                 $scope.loading = false;
 
             });

@@ -17,7 +17,6 @@ class UserController extends Controller
         $this->middleware('auth');
     }
 
-
     /**
      * Display a listing of the resource.
      *
@@ -55,7 +54,6 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-
         $this->validate($request, ['name' => 'required']);
 
         User::create([
@@ -64,7 +62,7 @@ class UserController extends Controller
             'password'  => bcrypt($request->get('password'))
         ]);
 
-        return redirect('recovery/users')
+        return redirect('dashboard/users')
             ->with('status', 'User registered successfully')
             ->with('level', 'success');
     }
