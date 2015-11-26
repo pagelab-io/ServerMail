@@ -15,6 +15,7 @@ commentApp.controller('commentController', function($scope, $http) {
 
                 console.log(data);
             });
+
         }, 0);
     };
 

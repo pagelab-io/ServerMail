@@ -1,13 +1,14 @@
-<div ng-app="todoApp" ng-controller="todoController">
+
+<div class="todos-app" ng-app="todoApp" ng-controller="todoController as controller">
     <div class="panel panel-default">
-        <div class="panel-heading"><span>Mis tareas</span></div>
+        <div class="panel-heading"><span>Tareas</span></div>
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-12">
-                    <form autocomplete="off" ng-submit="addTodo()">
+                    <form autocomplete="off" ng-submit="controller.addTodo()">
                         <div class="form-group">
                             <div class="input-group">
-                                <input class="form-control" type='text' ng-model="todo.title" placeholder="Agregar tarea" required autofocus>
+                                <input class="form-control" type='text' ng-model="controller.todo.title" placeholder="Agregar tarea" required autofocus>
                                 <div class="md icon input-group-addon">
                                     <div class="fa fa-plus" ng-click="addTodo()"></div>
                                 </div>
@@ -20,7 +21,7 @@
                 <div class="col-md-12">
                     <span ng-show="loading" class="small"><i class="fa fa-spinner fa-spin"></i>Updating...</span>
                     <table class="table table-striped table-bordered">
-                        <tr ng-repeat="todo in todos">
+                        <tr ng-repeat="todo in controller.todos">
                             <td width="20px">
                                 <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="todo.done" ng-checked="@{{ todo.done }}" ng-change="updateTodo(todo)">
                             </td>

@@ -17,9 +17,9 @@ class CommentController extends Controller
      */
     public function index()
     {
-        $todos = Comment::all();
+        $comments = Comment::with('user')->get();
 
-        return $todos;
+        return response()->json($comments);
     }
 
     /**
@@ -30,6 +30,15 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
+
+        $validator = $this->validate($request, [
+            'text' => 'required|min:20'
+        ]);
+
+        if ($validator->fails()){
+            return response()->json($validator->errors());
+        }
+
         $comment = Comment::create($request->all());
         $comment->user_id = Auth::user()->id;
         $comment->save();

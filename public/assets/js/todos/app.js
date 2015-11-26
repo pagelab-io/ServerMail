@@ -1,65 +1,74 @@
-'use strict';
+(function(){
 
-var app = angular.module('todoApp', [], function() { });
+    'use strict';
 
-app.controller('todoController', function($scope, $http) {
+    var app = angular.module('todoApp', [], function() { });
 
-    $scope.comments = [];
-    $scope.loading = true;
+    app.controller('todoController', function($scope, $http) {
 
-    $scope.init = function() {
-        $scope.loading = true;
+        // Current comment.
+        this.todo = {};
+        this.todos = [];
+        this.loading = true;
 
-        setTimeout(function(){
+        this.init = function() {
+            this.loading = true;
+
+            var self = this;
+
             $http.get('/api/todos').success(function(data, status, headers, config) {
-                $scope.comments = data;
-                $scope.loading = false;
+                self.todos = data;
+                self.loading = false;
+
+                console.log(data);
             });
-        }, 0);
-    };
+        };
 
-    $scope.addTodo = function() {
-        $scope.loading = true;
-        //var token = $('meta[name="csrf_token"]').attr('content');
+        this.addTodo = function() {
+            this.loading = true;
+            var self = this;
+            //var token = $('meta[name="csrf_token"]').attr('content');
 
-        $http.post('/api/todos/store', {
-            title: $scope.todo.title,
-            done: $scope.todo.done
-        }).success(function(data, status, headers, config) {
-            $scope.comments.push(data);
-            $scope.todo = '';
-            $scope.loading = false;
+            $http.post('/api/todos/store', {
+                title: this.todo.title,
+                done: this.todo.done
+            }).success(function(data, status, headers, config) {
+                self.todos.push(data);
+                self.todo = '';
+                self.loading = false;
 
-        }).error(function(r){
-            $('body').html(r);
-        });
-    };
-
-    $scope.updateTodo = function(todo) {
-        $scope.loading = true;
-
-        $http.put('/api/todos/' + todo.id + '/update', {
-            done: todo.done
-        }).success(function(data, status, headers, config) {
-            todo = data;
-            $scope.loading = false;
-
-        });
-    };
-
-    $scope.deleteTodo = function(index) {
-        $scope.loading = true;
-        var todo = $scope.comments[index];
-
-        /* Call server api */
-        $http.delete('/api/todos/' + todo.id + '/delete')
-            .success(function() {
-                $scope.comments.splice(index, 1);
-                $scope.loading = false;
-
+            }).error(function(r){
+                $('body').html(r);
             });
-    };
+        };
+
+        this.updateTodo = function(todo) {
+            this.loading = true;
+
+            var self = this;
+
+            $http.put('/api/todos/' + todo.id + '/update', {
+                done: todo.done
+            }).success(function(data, status, headers, config) {
+                self.todo = data;
+                self.loading = false;
+            });
+        };
+
+        this.deleteTodo = function(index) {
+            this.loading = true;
+            var todo = this.todos[index];
+            var self = this;
+
+            /* Call servvar self = this;er api */
+            $http.delete('/api/todos/' + todo.id + '/delete')
+                .success(function() {
+                    self.todos.splice(index, 1);
+                    self.loading = false;
+                });
+        };
 
 
-    $scope.init();
-});
+        this.init();
+    });
+}());
