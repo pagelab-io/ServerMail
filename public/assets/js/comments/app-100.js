@@ -24,8 +24,6 @@
 
                 self.comments = data;
                 self.loading = false;
-
-                console.log(data);
             });
         };
 
