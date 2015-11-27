@@ -2,73 +2,78 @@
 
     'use strict';
 
-    var app = angular.module('todoApp', [], function() { });
+    angular
+        .module('todoApp', [])
+        .controller('todoController', TodoController);
 
-    app.controller('todoController', function($scope, $http) {
+    TodoController.$inject = ['$scope', '$http'];
 
-        // Current comment.
-        this.todo = {};
-        this.todos = [];
-        this.loading = true;
+    function TodoController($scope, $http) {
 
-        this.init = function() {
-            this.loading = true;
+        // ViewModel
+        var vm = this;
 
-            var self = this;
+        // Current entity.
+        vm.todo = {};
+
+        // List of todos
+        vm.todos = [];
+
+        // Falg that indicates if it loading
+        vm.loading = true;
+
+        vm.init = function() {
+            vm.loading = true;
 
             $http.get('/api/todos').success(function(data, status, headers, config) {
-                self.todos = data;
-                self.loading = false;
-
-                //console.log(data);
+                vm.todos = data;
+                vm.loading = false;
             });
         };
 
-        this.addTodo = function() {
-            this.loading = true;
-            var self = this;
-            //var token = $('meta[name="csrf_token"]').attr('content');
+        vm.addTodo = function() {
+            vm.loading = true;
 
             $http.post('/api/todos/store', {
-                title: this.todo.title,
-                done: this.todo.done
+                title: vm.todo.title,
+                done: vm.todo.done
             }).success(function(data, status, headers, config) {
-                self.todos.push(data);
-                self.todo = '';
-                self.loading = false;
+                vm.todos.push(data);
+                vm.todo = '';
+                vm.loading = false;
 
             }).error(function(r){
-                $('body').html(r);
+
             });
         };
 
-        this.updateTodo = function(todo) {
-            this.loading = true;
+        vm.updateTodo = function(todo) {
+            vm.loading = true;
 
-            var self = this;
 
             $http.put('/api/todos/' + todo.id + '/update', {
                 done: todo.done
             }).success(function(data, status, headers, config) {
-                self.todo = data;
-                self.loading = false;
+                vm.todo = data;
+                vm.loading = false;
             });
         };
 
-        this.deleteTodo = function(index) {
-            this.loading = true;
-            var todo = this.todos[index];
-            var self = this;
+        vm.deleteTodo = function(index) {
+            vm.loading = true;
+            var todo = vm.todos[index];
 
-            /* Call servvar self = this;er api */
+            /* Call server */
             $http.delete('/api/todos/' + todo.id + '/delete')
                 .success(function() {
-                    self.todos.splice(index, 1);
-                    self.loading = false;
+                    vm.todos.splice(index, 1);
+                    vm.loading = false;
                 });
         };
 
 
-        this.init();
-    });
+        vm.init();
+    }
+
+
 }());
