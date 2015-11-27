@@ -22,7 +22,7 @@
     <!-- Comments List -->
     <div class="comments">
         <!-- Comment -->
-        <div class="comment" ng-repeat="comment in cmntCtrl.comments | orderBy: '-date'">
+        <div class="comment" ng-repeat="comment in cmntCtrl.comments | orderBy: '-created_at'">
             <!-- Comment Avatar -->
             <div class="comment-avatar">
                 <img src="http://servermail.pagelab.io/assets/imgs/default_user.png" title="@{{ comment.user.name }}">
