@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="cover">
-                <h1>Welcome to Server Mail</h1>
+                <h1>Welcome to Server Mail from PageLab</h1>
             </div>
         </div>
     </div>
