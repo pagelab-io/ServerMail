@@ -1,6 +1,6 @@
 <?php
 
-namespace PageLab\ServerMail\Http\Controllers\Todo;
+namespace PageLab\ServerMail\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 
