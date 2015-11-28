@@ -198,7 +198,6 @@ $router->group([
 ], function($router) {
 
     $router->group([
-        'namespace' => 'Todo',
         'prefix' => 'todos'
     ], function($router){
         $router->get('/', 'TodoController@index');
@@ -208,7 +207,6 @@ $router->group([
     });
 
     $router->group([
-        'namespace' => 'Comment',
         'prefix' => 'comments'
     ], function($router){
         $router->get('/', 'CommentController@index');
