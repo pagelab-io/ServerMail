@@ -193,7 +193,7 @@ $router->group([
 // API Route for Public
 $router->group([
     'middleware' => 'auth',
-    'namespace'  => 'Api',
+    'namespace'  => 'API',
     'prefix' => 'api'
 ], function($router) {
 
