@@ -1,6 +1,6 @@
 <?php
 
-namespace PageLab\ServerMail\Http\Controllers\API;
+namespace PageLab\ServerMail\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
