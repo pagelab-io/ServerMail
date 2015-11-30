@@ -10,7 +10,7 @@
     <hr>
     <div class="row">
         <div class="col-md-6">@include('todos.app')</div>
-        <div class="col-md-6">@include('comments.app')</div>
+        {{--<div class="col-md-6">@include('comments.app')</div>--}}
     </div>
 @stop
 
