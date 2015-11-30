@@ -193,17 +193,17 @@ $router->group([
 // API Route for Public
 $router->group([
     'middleware' => 'auth',
-    'namespace'  => 'API',
+    'namespace'  => 'Api',
     'prefix' => 'api'
 ], function($router) {
 
     $router->group([
-        'prefix' => 'todos'
+        'prefix' => 'tasks'
     ], function($router){
-        $router->get('/', 'TodoController@index');
-        $router->post('/store', 'TodoController@store');
-        $router->put('{id}/update', 'TodoController@update');
-        $router->delete('/{id}/delete', 'TodoController@destroy');
+        $router->get('/', 'TaskController@index');
+        $router->post('/store', 'TaskController@store');
+        $router->put('{id}/update', 'TaskController@update');
+        $router->delete('/{id}/delete', 'TaskController@destroy');
     });
 
     $router->group([

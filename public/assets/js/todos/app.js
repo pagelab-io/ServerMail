@@ -1,5 +1,4 @@
 (function(){
-
     'use strict';
 
     angular
@@ -19,13 +18,13 @@
         // List of todos
         vm.todos = [];
 
-        // Falg that indicates if it loading
+        // Flag that indicates if it loading
         vm.loading = true;
 
         vm.init = function() {
             vm.loading = true;
 
-            $http.get('/api/todos').success(function(data, status, headers, config) {
+            $http.get('/api/tasks').success(function(data, status, headers, config) {
                 vm.todos = data;
                 vm.loading = false;
             });
@@ -34,13 +33,15 @@
         vm.addTodo = function() {
             vm.loading = true;
 
-            $http.post('/api/todos/store', {
-                title: vm.todo.title,
+            $http.post('/api/tasks/store', {
+                name: vm.todo.name,
                 done: vm.todo.done
             }).success(function(data, status, headers, config) {
                 vm.todos.push(data);
                 vm.todo = '';
                 vm.loading = false;
+
+                console.log(data);
 
             }).error(function(r){
 
@@ -50,8 +51,7 @@
         vm.updateTodo = function(todo) {
             vm.loading = true;
 
-
-            $http.put('/api/todos/' + todo.id + '/update', {
+            $http.put('/api/tasks/' + todo.id + '/update', {
                 done: todo.done
             }).success(function(data, status, headers, config) {
                 vm.todo = data;
@@ -64,8 +64,8 @@
             var todo = vm.todos[index];
 
             /* Call server */
-            $http.delete('/api/todos/' + todo.id + '/delete')
-                .success(function() {
+            $http.delete('/api/tasks/' + todo.id + '/delete')
+                .success(function(response) {
                     vm.todos.splice(index, 1);
                     vm.loading = false;
                 });

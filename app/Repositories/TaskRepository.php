@@ -7,6 +7,18 @@ use PageLab\ServerMail\Task;
 
 class TaskRepository
 {
+
+    /**
+     * Get the task by id
+     *
+     * @param int $id
+     * @return Task
+     */
+    public function find($id){
+
+        return Task::findOrFail($id);
+    }
+
     /**
      * Get all of the tasks for a given user.
      *
@@ -16,7 +28,7 @@ class TaskRepository
     public function forUser(User $user)
     {
         return Task::where('user_id', $user->id)
-                    ->orderBy('created_at', 'asc')
+                    ->orderBy('created_at', 'desc')
                     ->get();
     }
 }

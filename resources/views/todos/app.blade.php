@@ -8,7 +8,7 @@
                     <form autocomplete="off" ng-submit="controller.addTodo()">
                         <div class="form-group">
                             <div class="input-group">
-                                <input class="form-control" type='text' ng-model="controller.todo.title" placeholder="Agregar tarea" required autofocus>
+                                <input class="form-control" type='text' ng-model="controller.todo.name" placeholder="Agregar tarea" required autofocus>
                                 <div class="md icon input-group-addon">
                                     <div class="fa fa-plus" ng-click="addTodo()"></div>
                                 </div>
@@ -25,10 +25,10 @@
                             <td width="20px">
                                 <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="todo.done" ng-checked="@{{ todo.done }}" ng-change="updateTodo(todo)">
                             </td>
-                            <td>@{{todo.title}}</td>
+                            <td>@{{todo.name}}</td>
                             <td width="40px">
-                                <button class="btn btn-danger btn-xs" ng-click="deleteTodo($index)" title="@{{ $index }}">
-                                    <span class="fa fa-trash" ></span>
+                                <button class="btn btn-danger btn-xs" ng-click="controller.deleteTodo($index)" title="@{{ $index }}">
+                                    <span class="fa fa-trash"></span>
                                 </button>
                             </td>
                         </tr>

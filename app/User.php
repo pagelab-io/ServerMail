@@ -46,6 +46,13 @@ class User extends Model implements AuthenticatableContract,
     protected $hidden = ['password', 'remember_token'];
 
     /**
+     * Get all of the tasks for the user.
+     */
+    public function tasks(){
+        return $this->hasMany(Task::class);
+    }
+
+    /**
      * Filter an user by email
      *
      * @param $query

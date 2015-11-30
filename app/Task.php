@@ -2,7 +2,6 @@
 
 namespace PageLab\ServerMail;
 
-use PageLab\ServerMail\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
@@ -12,14 +11,14 @@ class Task extends Model
      *
      * @var string
      */
-    protected $table = 'todos';
+    protected $table = 'tasks';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'content'];
 
     /**
      * Get the user that owns the task.
