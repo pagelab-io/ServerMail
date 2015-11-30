@@ -9,7 +9,7 @@
     <h1>Dashboard</h1>
     <hr>
     <div class="row">
-        <div class="col-md-6">@include('todos.app')</div>
+        <div class="col-md-6">@include('api.tasks.app')</div>
         {{--<div class="col-md-6">@include('comments.app')</div>--}}
     </div>
 @stop
