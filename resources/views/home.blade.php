@@ -17,5 +17,6 @@
 @section('js')
     <!-- AngularJS  -->
     <script src="{{asset('assets/js/todos/app.js')}}"></script>
+    <script src="{{asset('assets/js/todos/services.js')}}"></script>
     <script src="{{asset('assets/js/comments/app-100.js')}}"></script>
 @stop

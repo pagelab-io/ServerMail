@@ -21,7 +21,7 @@
                 <div class="col-md-12">
                     <span ng-show="loading" class="small"><i class="fa fa-spinner fa-spin"></i>Updating...</span>
                     <table class="table table-striped table-bordered">
-                        <tr ng-repeat="todo in controller.todos">
+                        <tr ng-repeat="todo in controller.todos | orderBy: -'created_at'">
                             <td width="20px">
                                 <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="todo.done" ng-checked="@{{ todo.done }}" ng-change="controller.updateTodo(todo)">
                             </td>

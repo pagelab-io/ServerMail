@@ -2,12 +2,12 @@
     'use strict';
 
     angular
-        .module('todoApp', [])
+        .module('todoApp', ['taskServices'])
         .controller('todoController', TodoController);
 
-    TodoController.$inject = ['$scope', '$http'];
+    TodoController.$inject = ['$scope', '$http', 'Task'];
 
-    function TodoController($scope, $http) {
+    function TodoController($scope, $http, Task) {
 
         // ViewModel
         var vm = this;
@@ -24,20 +24,23 @@
         vm.init = function() {
             vm.loading = true;
 
-            $http.get('/api/tasks').success(function(data, status, headers, config) {
+            Task.index().success(function(data) {
                 vm.todos = data;
                 vm.loading = false;
             });
+
         };
 
         vm.addTodo = function() {
             vm.loading = true;
 
-            $http.post('/api/tasks/store', {
+            var newTask = {
                 name: vm.todo.name,
                 done: vm.todo.done
-            }).success(function(data, status, headers, config) {
-                vm.todos.push(data);
+            };
+
+            Task.store(newTask).success(function(data) {
+                vm.todos.unshift(data);
                 vm.todo = '';
                 vm.loading = false;
 
@@ -48,12 +51,12 @@
             });
         };
 
-        vm.updateTodo = function(todo) {
+        vm.updateTodo = function(task) {
             vm.loading = true;
 
-            $http.put('/api/tasks/' + todo.id + '/update', {
-                done: todo.done
-            }).success(function(data, status, headers, config) {
+            Task.update(task.id, {
+                done: task.done
+            }).success(function(data) {
                 vm.todo = data;
                 vm.loading = false;
 
@@ -65,8 +68,7 @@
             vm.loading = true;
             var todo = vm.todos[index];
 
-            /* Call server */
-            $http.delete('/api/tasks/' + todo.id + '/delete')
+            Task.destroy(todo.id)
                 .success(function(response) {
                     vm.todos.splice(index, 1);
                     vm.loading = false;
