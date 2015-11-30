@@ -23,7 +23,7 @@
                     <table class="table table-striped table-bordered">
                         <tr ng-repeat="todo in controller.todos">
                             <td width="20px">
-                                <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="todo.done" ng-checked="@{{ todo.done }}" ng-change="updateTodo(todo)">
+                                <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="todo.done" ng-checked="@{{ todo.done }}" ng-change="controller.updateTodo(todo)">
                             </td>
                             <td>@{{todo.name}}</td>
                             <td width="40px">

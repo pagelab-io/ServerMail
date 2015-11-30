@@ -56,6 +56,8 @@
             }).success(function(data, status, headers, config) {
                 vm.todo = data;
                 vm.loading = false;
+
+                console.log(data);
             });
         };
 
