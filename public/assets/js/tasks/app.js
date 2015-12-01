@@ -7,6 +7,7 @@
 
     TaskController.$inject = ['$scope', '$http', 'Task'];
 
+
     function TaskController($scope, $http, Task) {
 
         // ViewModel

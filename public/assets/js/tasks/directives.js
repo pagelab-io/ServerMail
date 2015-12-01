@@ -5,7 +5,6 @@
         .module('taskDirectives', [])
         .directive('contenteditable', ContentEditable);
 
-
     function ContentEditable(){
 
         var ContentEditable = {

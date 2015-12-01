@@ -13,7 +13,8 @@ use PageLab\ServerMail\Repositories\TaskRepository;
 
 class TaskController extends Controller
 {
-    
+
+
     /**
      * The task repository instance.
      *

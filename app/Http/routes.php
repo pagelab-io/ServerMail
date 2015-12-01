@@ -190,6 +190,7 @@ $router->group([
 });
 
 
+
 // API Route for Public
 $router->group([
     'middleware' => 'auth',

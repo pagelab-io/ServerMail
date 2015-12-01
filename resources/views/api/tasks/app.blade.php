@@ -1,4 +1,3 @@
-
 <div class="TaskApp" class="task-app" ng-app="taskApp" ng-controller="TaskController as controller">
     <div class="panel panel-default">
         <div class="panel-heading"><span>Tareas</span></div>
@@ -46,4 +45,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> <!-- .TaskApp -->

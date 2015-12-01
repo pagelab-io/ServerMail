@@ -6,6 +6,7 @@
     <link href="{{ asset('/assets/css/tasks.css') }}" rel="stylesheet">
 @stop
 
+
 @section('content')
     <h1>Dashboard</h1>
     <hr>
@@ -14,6 +15,7 @@
         {{--<div class="col-md-6">@include('comments.app')</div>--}}
     </div>
 @stop
+
 
 @section('js')
     <!-- AngularJS Tasks App-->
