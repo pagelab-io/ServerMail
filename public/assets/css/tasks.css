@@ -1,0 +1,15 @@
+.TaskApp label[contenteditable="true"]{
+    width: 100%;
+    border: solid 1px transparent;
+    box-shadow: none;
+    padding: 5px 3px;
+    font-weight:normal;
+    font-size: 14px;
+    outline: 0;
+}
+
+.TaskApp label[contenteditable="true"]:active
+{
+
+
+}

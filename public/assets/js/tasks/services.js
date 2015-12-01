@@ -44,6 +44,7 @@
              * @returns Promise
              */
             update: function(id, data){
+
                 return $http.put(Task.url  + id + '/update', data);
             },
 
@@ -56,6 +57,17 @@
              */
             destroy: function(id){
                 return $http.delete(Task.url + id + '/delete');
+            },
+
+            /**
+             * Change done value of the task
+             *
+             * @param id
+             * @param data
+             * @returns Promise
+             */
+            toggleDone: function(id, data){
+                return $http.put(Task.url  + id + '/toggleDone', data);
             }
 
         };

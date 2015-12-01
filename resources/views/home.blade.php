@@ -3,6 +3,7 @@
 
 @section('css')
     <link href="{{ asset('/assets/css/comment.css') }}" rel="stylesheet">
+    <link href="{{ asset('/assets/css/tasks.css') }}" rel="stylesheet">
 @stop
 
 @section('content')
@@ -15,8 +16,10 @@
 @stop
 
 @section('js')
-    <!-- AngularJS  -->
-    <script src="{{asset('assets/js/todos/app.js')}}"></script>
-    <script src="{{asset('assets/js/todos/services.js')}}"></script>
+    <!-- AngularJS Tasks App-->
+    <script src="{{asset('assets/js/tasks/services.js')}}"></script>
+    <script src="{{asset('assets/js/tasks/app.js')}}"></script>
+
+    <!-- AngularJS Comments App-->
     <script src="{{asset('assets/js/comments/app-100.js')}}"></script>
 @stop

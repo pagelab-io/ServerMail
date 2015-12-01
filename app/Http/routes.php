@@ -203,6 +203,7 @@ $router->group([
         $router->get('/', 'TaskController@index');
         $router->post('/store', 'TaskController@store');
         $router->put('{id}/update', 'TaskController@update');
+        $router->put('{id}/toggleDone', 'TaskController@toggleDone');
         $router->delete('/{id}/delete', 'TaskController@destroy');
     });
 

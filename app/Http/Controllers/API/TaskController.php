@@ -77,11 +77,28 @@ class TaskController extends Controller
     public function update(Request $request, $id)
     {
         $task = $this->tasks->find($id);
-        $task->done = $request->get('done');
+        $task->name = $request->get('name');
         $task->save();
 
         //return $todo;
         return response()->json(['success' => 'Task ' . $task->id . ' updated successfully.']);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function toggleDone(Request $request, $id)
+    {
+        $task = $this->tasks->find($id);
+        $task->done = $request->get('done');
+        $task->save();
+
+        //return $todo;
+        return response()->json(['success' => 'Task ' . $task->id . ' updated to ' . $request->get('done') . ' successfully.']);
     }
 
     /**
