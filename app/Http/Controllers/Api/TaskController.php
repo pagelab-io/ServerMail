@@ -3,17 +3,12 @@
 namespace PageLab\ServerMail\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-
-use League\Flysystem\Exception;
-use PageLab\ServerMail\Task;
 use PageLab\ServerMail\Http\Requests;
 use PageLab\ServerMail\Http\Controllers\Controller;
 use PageLab\ServerMail\Repositories\TaskRepository;
 
 class TaskController extends Controller
 {
-
 
     /**
      * The task repository instance.
