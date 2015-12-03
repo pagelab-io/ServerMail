@@ -19,7 +19,6 @@ class CommentController extends Controller
     public function index()
     {
         $comments = Comment::with('user')->get();
-
         return response()->json($comments);
     }
 

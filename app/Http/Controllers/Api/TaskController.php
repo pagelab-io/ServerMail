@@ -82,7 +82,6 @@ class TaskController extends Controller
         $task->name = $request->get('name');
         $task->save();
 
-        //return $todo;
         return response()->json(['success' => 1, 'data' => $task, 'message' => 'Task ' . $task->id . ' updated successfully.']);
     }
 
