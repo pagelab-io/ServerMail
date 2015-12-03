@@ -1,3 +1,8 @@
+.TaskApp{
+    user-select: none;
+    -webkit-user-select: none;
+}
+
 .TaskApp label[contenteditable="true"]{
     width: 100%;
     border: solid 1px transparent;
@@ -8,8 +13,23 @@
     outline: 0;
 }
 
-.TaskApp label[contenteditable="true"]:active
-{
+.TaskApp .tasks-header .input-group-addon{
+    cursor: pointer;
+}
 
+.TaskApp .tasks-header .input-group-addon:hover{
+    color: green;
+    border-color: #66afe9;
+}
 
+.TaskApp .tasks-body .form-control{
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    border-bottom: solid 1px transparent;
+    transition: all 250ms;
+}
+
+.TaskApp .tasks-body .form-control:focus{
+    border-bottom: solid 1px #66afe9;
 }

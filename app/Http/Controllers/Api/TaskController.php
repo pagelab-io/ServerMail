@@ -3,6 +3,8 @@
 namespace PageLab\ServerMail\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
 use PageLab\ServerMail\Http\Requests;
 use PageLab\ServerMail\Http\Controllers\Controller;
 use PageLab\ServerMail\Repositories\TaskRepository;
@@ -50,9 +52,13 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required|max:255',
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255'
         ]);
+
+        if ($validator->fails()){
+            return response()->json(['success' => 0, 'data' => null, 'message' => $validator->errors()]);
+        }
 
         $tasks = $request->user()->tasks();
 
@@ -60,7 +66,7 @@ class TaskController extends Controller
             'name' => $request->name
         ]);
 
-        return $newTask;
+        return  response()->json(['success' => 1, 'data' => $newTask, 'message' => 'Task created successfully.']);;
     }
 
     /**
@@ -77,7 +83,7 @@ class TaskController extends Controller
         $task->save();
 
         //return $todo;
-        return response()->json(['success' => 'Task ' . $task->id . ' updated successfully.']);
+        return response()->json(['success' => 1, 'data' => $task, 'message' => 'Task ' . $task->id . ' updated successfully.']);
     }
 
     /**

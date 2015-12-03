@@ -19,7 +19,9 @@
 
 @section('js')
     <!-- AngularJS Tasks App-->
-    <script src="{{asset('assets/js/tasks/services.js')}}"></script>
+    <script src="{{asset('assets/js/tasks/directives/EnterStroke.js')}}"></script>
+    <script src="{{asset('assets/js/tasks/services/TaskService.js')}}"></script>
+    <script src="{{asset('assets/js/tasks/controllers/TaskController.js')}}"></script>
     <script src="{{asset('assets/js/tasks/app.js')}}"></script>
 
     <!-- AngularJS Comments App-->

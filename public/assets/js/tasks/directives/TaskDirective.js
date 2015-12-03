@@ -2,7 +2,7 @@
     "use strict";
 
     angular
-        .module('taskDirectives', [])
+        .module('TaskDirective', [])
         .directive('contenteditable', ContentEditable);
 
     function ContentEditable(){

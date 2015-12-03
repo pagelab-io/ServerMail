@@ -1,12 +1,11 @@
 (function(){
-    "use strict";
+    'use strict';
 
     angular
-        .module('taskServices', [])
+        .module('TaskService', [])
         .factory('Task', Task);
 
     Task.$inject = ['$http'];
-
 
     function Task($http){
 
