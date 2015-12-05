@@ -198,6 +198,10 @@ $router->group([
     'prefix' => 'api'
 ], function($router) {
 
+    // Getting RESTful
+    $router->resource('/v1/tasks', 'TaskController');
+
+    // Tasks routes
     $router->group([
         'prefix' => 'tasks'
     ], function($router){
@@ -208,6 +212,7 @@ $router->group([
         $router->delete('/{id}/delete', 'TaskController@destroy');
     });
 
+    // Comments routes
     $router->group([
         'prefix' => 'comments'
     ], function($router){

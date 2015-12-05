@@ -7,3 +7,8 @@ angular
         'TaskService',
         'TaskController'
     ]);
+
+
+// TaskResource Test
+angular
+    .module('TaskResource', []);
