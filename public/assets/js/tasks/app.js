@@ -1,7 +1,7 @@
 (function(){
     'use strict';
 
-// Main start point
+    // Main start point
     angular
         .module('taskApp', [
             'EnterStroke',
@@ -11,7 +11,7 @@
         ]);
 
 
-// TaskResource Test
+    // TaskResource Test
     angular
         .module('TaskResource', []);
 

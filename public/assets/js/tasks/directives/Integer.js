@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    // Reacts upon enter key press.
+    // Convert to integer
     angular
         .module('Integer', [])
         .directive('Integer', function () {

@@ -40,7 +40,7 @@ class TaskController extends Controller
     {
         $tasks = $this->tasks->forUser($request->user());
 
-        return response()->json(['tasks' => $tasks]);
+        return response()->json(['success'=> 1, 'data' => $tasks]);
     }
 
     /**

@@ -28,9 +28,9 @@
 
             Task.index().success(function(response) {
                 console.log('--Tasks--');
-                console.log(response.tasks);
+                console.log(response);
                 if (response) {
-                    vm.tasks = response.tasks;
+                    vm.tasks = response.data;
                     vm.loading = false;
                 }
             });
