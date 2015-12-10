@@ -26,10 +26,11 @@
         vm.init = function() {
             vm.loading = true;
 
-            Task.index().success(function(data) {
-
-                if (data) {
-                    vm.tasks = data;
+            Task.index().success(function(response) {
+                console.log('///');
+                console.log(response.tasks);
+                if (response) {
+                    vm.tasks = response.tasks;
                     vm.loading = false;
                 }
             });
