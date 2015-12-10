@@ -1,14 +1,18 @@
-'use strict';
+(function(){
+    'use strict';
 
 // Main start point
-angular
-    .module('taskApp', [
-        'EnterStroke',
-        'TaskService',
-        'TaskController'
-    ]);
+    angular
+        .module('taskApp', [
+            'EnterStroke',
+            'TaskService',
+            'TaskController',
+            'Integer'
+        ]);
 
 
 // TaskResource Test
-angular
-    .module('TaskResource', []);
+    angular
+        .module('TaskResource', []);
+
+})();

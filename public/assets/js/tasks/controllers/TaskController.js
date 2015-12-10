@@ -27,7 +27,7 @@
             vm.loading = true;
 
             Task.index().success(function(response) {
-                console.log('///');
+                console.log('--Tasks--');
                 console.log(response.tasks);
                 if (response) {
                     vm.tasks = response.tasks;
