@@ -20,9 +20,7 @@ class TaskController extends Controller
 
     /**
      * Create a new controller instance.
-     *
      * @param TaskRepository $tasks
-     * @return void
      */
     public function __construct(TaskRepository $tasks)
     {
