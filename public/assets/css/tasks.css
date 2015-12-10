@@ -30,6 +30,11 @@
     transition: all 250ms;
 }
 
+.TaskApp .tasks-body .form-control.done{
+    color: #999;
+    text-decoration: line-through;
+}
+
 .TaskApp .tasks-body .form-control:focus{
     border-bottom: solid 1px #66afe9;
 }
