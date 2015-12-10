@@ -49,7 +49,6 @@
                                        ng-blur="controller.updateTask(task)"
                                        enter-stroke="controller.updateTask(task)" />
 
-                                <span class="small hidden">Done: @{{ task.done }}</span>
                             </td>
 
                             <td width="40px">
