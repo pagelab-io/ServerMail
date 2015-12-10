@@ -74,7 +74,6 @@
             }).success(function(response) {
                 console.log('[message: ' + response.message + ']');
                 if (response.success == 1) {
-                    vm.task = response.data;
                     vm.loading = false;
                 }
             });
@@ -90,7 +89,6 @@
                 console.log(response.request);
                 //console.log('[message: ' + response.message + '  done: '+ response.data.done + ']');
                 if (response.success == 1) {
-                    vm.task = response.data;
                     vm.loading = false;
                 }
             });

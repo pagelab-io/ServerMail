@@ -34,15 +34,18 @@
                         <tr title="@{{task.id}}" class="tasks-item" ng-repeat="task in controller.tasks | orderBy: -'created_at'">
                             <td width="20px">
                                 <input type="checkbox"
+                                       ng-false-value="0"
+                                       ng-true-value="1"
                                        ng-model="task.done"
                                        ng-checked="task.done"
-                                       ng-change="controller.toggleDone(task)">
+                                       ng-click="controller.toggleDone(task)">
                             </td>
                             <td>
                                 <input type="text"
                                        class="form-control"
                                        ng-class="{done: task.done}"
                                        ng-model="task.name"
+                                       ng-value="task.name"
                                        ng-blur="controller.updateTask(task)"
                                        enter-stroke="controller.updateTask(task)" />
 
