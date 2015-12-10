@@ -37,13 +37,13 @@
                                        ng-false-value="0"
                                        ng-true-value="1"
                                        ng-model="task.done"
-                                       ng-checked="task.done"
+                                       ng-checked="task.done == 1"
                                        ng-change="controller.toggleDone(task)">
                             </td>
                             <td>
                                 <input type="text"
                                        class="form-control"
-                                       ng-class="{done: task.done}"
+                                       ng-class="{done: task.done == 1}"
                                        ng-model="task.name"
                                        ng-value="task.name"
                                        ng-blur="controller.updateTask(task)"
