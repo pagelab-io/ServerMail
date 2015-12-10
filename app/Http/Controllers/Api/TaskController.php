@@ -99,7 +99,7 @@ class TaskController extends Controller
             $task->done = !$request->get('done');
             $task->save();
 
-            return response()->json(['success' => 'true ' . $task->id . ' updated to ' . $request->get('done') . ' successfully.']);
+            return response()->json(['success' => 1, 'data' => $task, 'message' => 'Task ' . $task->id . ' updated successfully.']);
         }
     }
 

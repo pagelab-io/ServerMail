@@ -83,12 +83,16 @@
         vm.toggleDone = function(task){
             vm.loading = true;
 
+            console.log(task);
+
             Task.toggleDone(task.id, {
                 done: task.done
-            }).success(function(data) {
+            }).success(function(response) {
 
-                if (data) {
-                    vm.task = data;
+                console.log(response);
+
+                if (response.success == 1) {
+                    vm.task = response.data;
                     vm.loading = false;
                 }
             });
