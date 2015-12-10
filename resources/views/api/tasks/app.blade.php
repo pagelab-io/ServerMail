@@ -31,7 +31,7 @@
                     </div>
 
                     <table class="table tasks-list table-striped table-bordered">
-                        <tr class="tasks-item" ng-repeat="task in controller.tasks | orderBy: -'created_at'">
+                        <tr title="@{{task.id}}" class="tasks-item" ng-repeat="task in controller.tasks | orderBy: -'created_at'">
                             <td width="20px">
                                 <input type="checkbox"
                                        ng-true-value="1"
@@ -43,7 +43,7 @@
                             <td>
                                 <input type="text"
                                        class="form-control"
-                                       ng-class="{done: task.done != 0}"
+                                       ng-class="{done: task.done}"
                                        ng-model="task.name"
                                        ng-blur="controller.updateTask(task)"
                                        enter-stroke="controller.updateTask(task)" />

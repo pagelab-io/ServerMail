@@ -83,10 +83,12 @@
         vm.toggleDone = function(task){
             vm.loading = true;
 
+            console.log(task);
             Task.toggleDone(task.id, {
                 done: task.done
             }).success(function(response) {
-                console.log('[message: ' + response.message + '  done: '+ response.data.done + ']');
+                console.log(response.request);
+                //console.log('[message: ' + response.message + '  done: '+ response.data.done + ']');
                 if (response.success == 1) {
                     vm.task = response.data;
                     vm.loading = false;
