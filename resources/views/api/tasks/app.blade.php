@@ -38,7 +38,7 @@
                                        ng-true-value="1"
                                        ng-model="task.done"
                                        ng-checked="task.done"
-                                       ng-click="controller.toggleDone(task)">
+                                       ng-change="controller.toggleDone(task)">
                             </td>
                             <td>
                                 <input type="text"
