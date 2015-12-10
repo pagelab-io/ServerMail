@@ -40,7 +40,6 @@
                                        ng-checked="@{{task.done}}"
                                        ng-change="controller.toggleDone(task)">
                             </td>
-
                             <td>
                                 <input type="text"
                                        class="form-control"
@@ -49,7 +48,7 @@
                                        ng-blur="controller.updateTask(task)"
                                        enter-stroke="controller.updateTask(task)" />
 
-                                <span class="small hidden">@{{ task.name }}</span>
+                                <span class="small">Done: @{{ task.done }}</span>
                             </td>
 
                             <td width="40px">
