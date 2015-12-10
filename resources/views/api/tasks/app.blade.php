@@ -34,8 +34,6 @@
                         <tr title="@{{task.id}}" class="tasks-item" ng-repeat="task in controller.tasks | orderBy: -'created_at'">
                             <td width="20px">
                                 <input type="checkbox"
-                                       ng-true-value="1"
-                                       ng-false-value="0"
                                        ng-model="task.done"
                                        ng-checked="task.done"
                                        ng-change="controller.toggleDone(task)">
