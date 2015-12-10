@@ -96,7 +96,7 @@ class TaskController extends Controller
         $task = $this->tasks->find($id);
 
         if ($task) {
-            $task->done = $request->get('done');
+            $task->done = !$request->get('done');
             $task->save();
 
             return response()->json(['success' => 'true ' . $task->id . ' updated to ' . $request->get('done') . ' successfully.']);
