@@ -43,7 +43,6 @@
                             <td>
                                 <input type="text"
                                        class="form-control"
-                                       ng-class="{done: task.done != 0}"
                                        ng-model="task.name"
                                        ng-blur="controller.updateTask(task)"
                                        enter-stroke="controller.updateTask(task)" />
