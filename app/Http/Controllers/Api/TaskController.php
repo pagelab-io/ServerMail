@@ -77,11 +77,17 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $response = null;
         $task = $this->tasks->find($id);
-        $task->name = $request->get('name');
-        $task->save();
 
-        return response()->json(['success' => 1, 'data' => $task, 'message' => 'Task ' . $task->id . ' updated successfully.']);
+        if ($task) {
+            $task->name = $request->get('name');
+            $task->save();
+
+            $response = response()->json(['success' => 1, 'data' => $task, 'message' => 'Task ' . $task->id . ' updated successfully.']);
+        }
+
+       return $response;
     }
 
     /**
@@ -94,13 +100,15 @@ class TaskController extends Controller
     public function toggleDone(Request $request, $id)
     {
         $task = $this->tasks->find($id);
-
+        $response = null;
         if ($task) {
             $task->done = !$request->get('done');
             $task->save();
 
-            return response()->json(['success' => 1, 'data' => $task, 'message' => 'Task ' . $task->id . ' updated successfully.']);
+            $response = response()->json(['success' => 1, 'data' => $task, 'message' => 'Task ' . $task->id . ' updated successfully.']);
         }
+
+        return $response;
     }
 
     /**
@@ -114,8 +122,13 @@ class TaskController extends Controller
     {
         //$this->authorize('destroy', $task);
         $task = $this->tasks->find($id);
-        $task->delete();
+        $response = null;
+        if ($task) {
+            $task->delete();
 
-        return response()->json(['success' => 'Task ' . $task->id . ' delete successfully.']);
+            $response = response()->json(['success' => 1, 'data' => $task, 'message' => 'Task ' . $task->id . ' deleted successfully.']);
+        }
+
+        return $response;
     }
 }

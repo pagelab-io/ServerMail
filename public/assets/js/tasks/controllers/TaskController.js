@@ -71,10 +71,10 @@
 
             Task.update(task.id, {
                 name: task.name
-            }).success(function(data) {
-
-                if (data) {
-                    vm.task = data;
+            }).success(function(response) {
+                console.log('[message: ' + response.message + ']');
+                if (response.success == 1) {
+                    vm.task = response.data;
                     vm.loading = false;
                 }
             });
@@ -83,14 +83,10 @@
         vm.toggleDone = function(task){
             vm.loading = true;
 
-            console.log(task);
-
             Task.toggleDone(task.id, {
                 done: task.done
             }).success(function(response) {
-
-                console.log(response);
-
+                console.log('[message: ' + response.message + '  done: '+ response.data.done + ']');
                 if (response.success == 1) {
                     vm.task = response.data;
                     vm.loading = false;
@@ -105,8 +101,8 @@
 
             Task.destroy(task.id)
                 .success(function(response) {
-
-                    if (response) {
+                    console.log('[message: ' + response.message + ']');
+                    if (response.success == 1) {
                         vm.tasks.splice(index, 1);
                         vm.loading = false;
                     }
