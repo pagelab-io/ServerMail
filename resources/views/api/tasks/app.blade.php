@@ -1,7 +1,7 @@
 {{--TaskApp--}}
 <div class="TaskApp" ng-app="taskApp" ng-controller="TaskController as controller">
     <div class="panel panel-default">
-        <div class="panel-heading"><span>Tareas</span></div>
+        <div class="panel-heading"><span>My Tasks</span></div>
         <div class="panel-body">
             <div class="row tasks-header">
                 <div class="col-md-12">
