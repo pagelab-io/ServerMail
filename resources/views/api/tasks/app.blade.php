@@ -8,7 +8,7 @@
                     <form autocomplete="off" ng-submit="controller.addTask()">
                         <div class="form-group">
                             <div class="input-group">
-                                <input class="form-control" type='text' ng-model="controller.task.name" placeholder="Agregar tarea" required autofocus>
+                                <input class="form-control" type='text' ng-model="controller.task.name" placeholder="Add new task" required autofocus>
                                 <div class="md icon input-group-addon" ng-click="controller.addTask()">
                                     <div class="fa fa-plus"></div>
                                 </div>
