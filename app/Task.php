@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * This file is part of Task.
+ *
+ * (c) PageLab
+ *
+ */
+
 namespace PageLab\ServerMail;
 
 use Illuminate\Database\Eloquent\Model;
