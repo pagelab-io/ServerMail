@@ -27,4 +27,13 @@ class Task extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var string[]
+     */
+    protected $casts = [
+        'done' => 'int'
+    ];
 }
