@@ -197,7 +197,7 @@ class DomainController extends Controller
     public function addAccount(Domain $domain, Request $request){
 
         $this->validate($request, [
-            'name' => 'required|unique:accounts'
+            'name' => 'required'
         ]);
 
         // Build new email
