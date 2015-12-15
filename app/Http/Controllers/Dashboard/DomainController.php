@@ -197,7 +197,7 @@ class DomainController extends Controller
     public function addAccount(Domain $domain, Request $request){
 
         $this->validate($request, [
-            'name' => 'required'
+            'name' => 'required' // |unique:accounts
         ]);
 
         // Build new email
@@ -211,7 +211,7 @@ class DomainController extends Controller
 
         return redirect()->route('dashboard.domains.accounts', $domain->id)
             ->with('status', 'Account added successfully')
-            ->with('level', 'success');;
+            ->with('level', 'success');
     }
 
     /**
