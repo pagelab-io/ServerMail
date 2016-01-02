@@ -14,6 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \PageLab\ServerMail\Console\Commands\Inspire::class,
+        \PageLab\ServerMail\Console\Commands\CreateLinuxUser::class,
+        \PageLab\ServerMail\Console\Commands\DeleteLinuxUser::class
     ];
 
     /**

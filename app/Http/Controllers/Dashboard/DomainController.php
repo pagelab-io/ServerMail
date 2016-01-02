@@ -2,6 +2,7 @@
 
 namespace PageLab\ServerMail\Http\Controllers\Dashboard;
 
+use Illuminate\Support\Facades\Artisan;
 use PageLab\ServerMail\Account;
 use PageLab\ServerMail\Alias;
 use PageLab\ServerMail\Domain;
@@ -208,6 +209,9 @@ class DomainController extends Controller
         $account->email = trim($email);
         $account->password = md5(trim($request->get('password')));
         $account->save();
+
+        // add linux user
+        Artisan::call("linuxuser:create",['name' => $request->get('name')]);
 
         return redirect()->route('dashboard.domains.accounts', $domain->id)
             ->with('status', 'Account added successfully')
