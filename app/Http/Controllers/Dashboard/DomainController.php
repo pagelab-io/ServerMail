@@ -281,7 +281,7 @@ class DomainController extends Controller
             if (count($accounts) == 0) {
 
                 // delete a linux user
-                Artisan::call("linuxuser:delete", ['name' => $name]);
+                Artisan::call("linuxuser:delete",['name' => $name]);
             }
 
         }
