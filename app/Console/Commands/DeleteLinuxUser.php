@@ -40,7 +40,7 @@ class DeleteLinuxUser extends Command
         $name = $this->argument("name");
 
         if ($name != "") {
-            shell_exec("sudo userdel ".$name);
+            shell_exec("sudo userdel ".$name." 2>&1");
         }
     }
 }
