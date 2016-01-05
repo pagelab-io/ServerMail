@@ -121,6 +121,7 @@
                         url: url,
                         type: 'DELETE',
                         success: function (result) {
+                            console.log(result);
                             // Do something with the result
                             if (result.success == 1) {
                                 row.fadeOut(200);

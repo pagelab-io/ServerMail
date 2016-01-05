@@ -265,8 +265,8 @@ class DomainController extends Controller
 
         if ($account) {
 
+            // delete the selected account
             $account->delete();
-            $response = response()->json(['success' => 1, 'message' => 'Account deleted successfully.']);
 
             // explode the email
             $explodes = explode('@', $account->email);
@@ -274,6 +274,8 @@ class DomainController extends Controller
 
             // search for accounts with the same name in email
             $accounts = Account::byAccountName($name);
+
+            $response = response()->json(['success' => 1, 'message' => 'Account deleted successfully.', 'accounts' => $accounts]);
 
             // TODO - change this
             if (count($accounts) == 0) {
