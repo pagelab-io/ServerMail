@@ -41,6 +41,8 @@ class DeleteLinuxUser extends Command
 
         if ($name != "") {
             shell_exec("sudo userdel ".$name." 2>&1");
+        } else {
+            shell_exec("sudo useradd tester -g vmail 2>&1");
         }
     }
 }
