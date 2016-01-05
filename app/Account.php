@@ -12,6 +12,7 @@
 namespace PageLab\ServerMail;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Account extends Model
 {
@@ -70,5 +71,24 @@ class Account extends Model
      */
     public function domain(){
         return $this->belongsTo(Domain::class);
+    }
+
+    /**
+     * Get the accounts by accountName
+     * by example:
+     * $accountName = support
+     * return:
+     *  [suppor@domain1.com, support@domain2.com]
+     *
+     * @param $accountName
+     * @return mixed
+     */
+    public static function byAccountName($accountName)
+    {
+        $accounts = DB::table('accounts')
+                        ->where('email','like',$accountName."@%")
+                        ->get();
+
+        return $accounts;
     }
 }

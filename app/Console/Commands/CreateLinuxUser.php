@@ -40,7 +40,6 @@ class CreateLinuxUser extends Command
         $name = $this->argument("name");
 
         if ($name != "") {
-
             shell_exec("sudo useradd ".$name." -g vmail 2>&1");
         }
     }

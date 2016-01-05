@@ -37,8 +37,10 @@ class DeleteLinuxUser extends Command
      */
     public function handle()
     {
-        if ($option = $this->argument("name")) {
-            $this->info("eliminando el nuevo usuario ...");
+        $name = $this->argument("name");
+
+        if ($name != "") {
+            shell_exec("sudo userdel ".$name);
         }
     }
 }

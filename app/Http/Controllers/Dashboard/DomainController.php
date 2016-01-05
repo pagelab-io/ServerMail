@@ -201,6 +201,9 @@ class DomainController extends Controller
             'name' => 'required' // |unique:accounts
         ]);
 
+        // search for accounts with the same name in email
+        $accounts = Account::byAccountName($request->get('name'));
+
         // Build new email
         $email = $request->get('name') . '@' . $domain->name;
 
@@ -210,8 +213,12 @@ class DomainController extends Controller
         $account->password = md5(trim($request->get('password')));
         $account->save();
 
-        // add linux user
-        Artisan::call("linuxuser:create",['name' => $request->get('name')]);
+        // TODO - change this
+        if (count($accounts) == 0) {
+
+            // add a linux user
+            Artisan::call("linuxuser:create",['name' => $request->get('name')]);
+        }
 
         return redirect()->route('dashboard.domains.accounts', $domain->id)
             ->with('status', 'Account added successfully')
@@ -241,7 +248,7 @@ class DomainController extends Controller
 
         return redirect()->route('dashboard.domains.aliases', $domain->id)
             ->with('status', 'Alias added successfully')
-            ->with('level', 'success');;
+            ->with('level', 'success');
     }
 
     /**
@@ -260,6 +267,21 @@ class DomainController extends Controller
 
             $account->delete();
             $response = response()->json(['success' => 1, 'message' => 'Account deleted successfully.']);
+
+            // explode the email
+            $explodes = explode('@', $account->email);
+            $name = $explodes[0];
+
+            // search for accounts with the same name in email
+            $accounts = Account::byAccountName($name);
+
+            // TODO - change this
+            if (count($accounts) == 0) {
+
+                // delete a linux user
+                Artisan::call("linuxuser:delete", ['name' => $name]);
+            }
+
         }
 
         return $response;
