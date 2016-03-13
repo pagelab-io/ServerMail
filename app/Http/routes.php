@@ -1,19 +1,7 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
-
-//Default home route
-$router->get('/', 'WelcomeController@index');
-$router->get('/home', 'HomeController@index');
+$router->get('/', 'WelcomeController@index');   // view for login
+$router->get('/home', 'HomeController@index');  // view for index after login
 
 // Task Routes
 Route::get('/tasks', 'TaskController@index');
@@ -28,19 +16,21 @@ $router->group([
     'prefix'     => 'auth'
 ], function($router) {
 
-    // Authentication routes...
+    /*// Authentication routes...   ESTO NO SE PARA QUE RAYOS SERVIA
     $router->get('login', [
         'middleware' => 'guest',
         'as' => 'login',
         'uses' => 'AuthController@showLogin'
-    ]);
+    ]);*/
 
+    // metodo que hace el proceso de login
     $router->post('login', [
-        'as' => 'login',
-        'middleware' => 'guest',
-        'uses'       => 'AuthController@postLogin'
+        'as' => 'login',                            // alias
+        'middleware' => 'guest',                    // aun no se bien para que es el middleware
+        'uses'       => 'AuthController@postLogin'  // método al que va a ir a hacer el proceso de login
     ]);
 
+    // metodo que hace el proceso de logout
     $router->get('logout', [
         'as'         => 'logout',
         'middleware' => 'auth',
@@ -70,8 +60,8 @@ $router->group([
 });
 
 
-
 // Protected routes, only logged in user can access
+// Rutas protegidas, solo los usuarios loggeados pueden tener acceso a ellas.
 $router->group([
     'middleware' => 'auth',
     'prefix'     => 'dashboard',

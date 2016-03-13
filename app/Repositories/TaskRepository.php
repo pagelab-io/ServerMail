@@ -5,18 +5,17 @@ namespace PageLab\ServerMail\Repositories;
 use PageLab\ServerMail\User;
 use PageLab\ServerMail\Task;
 
-class TaskRepository
+class TaskRepository extends BaseRepository
 {
 
     /**
-     * Get the task by id
+     * Return the namespace for Task Model
      *
-     * @param int $id
-     * @return Task
+     * @return mixed|string
      */
-    public function find($id){
-
-        return Task::findOrFail($id);
+    public function model()
+    {
+        return 'PageLab\ServerMail\Task';
     }
 
     /**
@@ -25,7 +24,7 @@ class TaskRepository
      * @param  User  $user
      * @return Collection
      */
-    public function forUser(User $user)
+    public function tasksByUser(User $user)
     {
         return Task::where('user_id', $user->id)
                     ->orderBy('created_at', 'desc')

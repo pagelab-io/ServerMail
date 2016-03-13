@@ -1,14 +1,14 @@
 {{--TaskApp--}}
 <div class="TaskApp" ng-app="taskApp" ng-controller="TaskController as controller">
     <div class="panel panel-default">
-        <div class="panel-heading"><span>My Tasks</span></div>
+        <div class="panel-heading"><span>Mis tareas</span></div>
         <div class="panel-body">
             <div class="row tasks-header">
                 <div class="col-md-12">
                     <form autocomplete="off" ng-submit="controller.addTask()">
                         <div class="form-group">
                             <div class="input-group">
-                                <input class="form-control" type='text' ng-model="controller.task.name" placeholder="Add new task" required autofocus>
+                                <input class="form-control" type='text' ng-model="controller.task.name" placeholder="Nueva tarea" required autofocus>
                                 <div class="md icon input-group-addon" ng-click="controller.addTask()">
                                     <div class="fa fa-plus"></div>
                                 </div>
@@ -21,8 +21,8 @@
             <div class="row tasks-body">
                 <div class="col-md-12">
 
-                    <span ng-show="loading" class="small"><i class="fa fa-spinner fa-spin"></i>Loading...</span>
-                    <p ng-if="!controller.tasks.length">There are no tasks right now</p>
+                    <span ng-show="loading" class="small"><i class="fa fa-spinner fa-spin"></i>Cargando...</span>
+                    <p ng-if="!controller.tasks.length">No hay tareas pendientes.</p>
 
                     <div ng-if="controller.errors.length" class="alert alert-warning" role="alert">
                         <ul>

@@ -13,24 +13,11 @@ use PageLab\ServerMail\Http\Controllers\Controller;
 
 class AuthController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Registration & Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users, as well as the
-    | authentication of existing users. By default, this controller uses
-    | a simple trait to add these behaviors. Why don't you explore it?
-    |
-    */
-
-    //use AuthenticatesAndRegistersUsers;//, ThrottlesLogins;
 
     /**
      * Create a new authentication controller instance.
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('guest', ['except' => 'getLogout']);
     }
 
@@ -39,34 +26,48 @@ class AuthController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function showLogin(){
+    /*public function showLogin(){
         return view('auth.login');
-    }
+    }*/
 
     /**
-     * Do Login
+     * Este método es llamado por la ruta auth.login para llevar a cabo el proceso de loggin
+     * - Primero se hace el intento de loggin y se valida que los campos sean correctos con Auth::attempt
+     * - Si se valido correctamente se regresa true y si no false
+     * - Dependiendo la respuesta se va a redireccionar al usuario al home o a la misma vista
+     *   con sus respectivos mensajes de error.
      *
      * @param LoginRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postLogin(LoginRequest $request){
+    public function postLogin(LoginRequest $request) {
 
-        if(Auth::attempt([
-            'email' => $request->get('email'),
-            'password' => $request->get('password')
-        ], $request->get('remember'))){
+        $redirect = null;
 
-            return redirect()
+        // loggin attempt
+        $attempt = Auth::attempt([
+            'email'     => $request->get('email'),
+            'password'  => $request->get('password')
+        ], $request->get('remember'));
+
+
+        if ($attempt) {
+
+            $redirect = redirect()
                 ->intended('/home')
-                ->with('status', 'Logged in successfully')
+                ->with('status', 'Sesión iniciada correctamente')
                 ->with('level', 'success');
+        } else {
+
+            $redirect =redirect()
+                ->back()
+                ->withInput()
+                ->with('status', 'correo electrónico y/o contraseña equivocados')
+                ->with('level', 'danger');
         }
 
-        return redirect()
-            ->back()
-            ->withInput()
-            ->with('status', 'Wrong email or password')
-            ->with('level', 'danger');
+        return $redirect;
+
     }
 
     /**
@@ -74,11 +75,13 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function getLogout(){
+    public function getLogout() {
+
         Auth::logout();
 
         return redirect('/')
-            ->with('status', 'Logged out successfully')
+            ->with('status', 'Sesión cerrada correctamente')
             ->with('level', 'success');
     }
+
 }

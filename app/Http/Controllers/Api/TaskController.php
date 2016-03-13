@@ -8,24 +8,26 @@ use Illuminate\Support\Facades\Validator;
 use PageLab\ServerMail\Http\Requests;
 use PageLab\ServerMail\Http\Controllers\Controller;
 use PageLab\ServerMail\Repositories\TaskRepository;
+use PageLab\ServerMail\Task;
 
 class TaskController extends Controller
 {
+
     /**
      * The task repository instance.
      *
      * @var TaskRepository
      */
-    protected $tasks;
+    protected $taskRepository;
 
     /**
      * Create a new controller instance.
-     * @param TaskRepository $tasks
+     * @param TaskRepository $taskRepository
      */
-    public function __construct(TaskRepository $tasks)
+    public function __construct(TaskRepository $taskRepository)
     {
         $this->middleware('auth');
-        $this->tasks = $tasks;
+        $this->taskRepository = $taskRepository;
     }
 
     /**
@@ -36,8 +38,7 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-        $tasks = $this->tasks->forUser($request->user());
-
+        $tasks = $this->taskRepository->tasksByUser($request->user());
         return response()->json(['success'=> 1, 'data' => $tasks]);
     }
 
@@ -53,9 +54,8 @@ class TaskController extends Controller
             'name' => 'required|max:255'
         ]);
 
-        if ($validator->fails()){
+        if ($validator->fails())
             return response()->json(['success' => 0, 'data' => null, 'message' => $validator->errors()]);
-        }
 
         $tasks = $request->user()->tasks();
 
@@ -63,7 +63,7 @@ class TaskController extends Controller
             'name' => $request->name
         ]);
 
-        return  response()->json(['success' => 1, 'data' => $newTask, 'message' => 'Task created successfully.']);;
+        return  response()->json(['success' => 1, 'data' => $newTask, 'message' => 'Tarea creada correctamente.']);;
     }
 
     /**
@@ -76,13 +76,13 @@ class TaskController extends Controller
     public function update(Request $request, $id)
     {
         $response = null;
-        $task = $this->tasks->find($id);
+        $task = $this->taskRepository->byId($id);
 
         if ($task) {
             $task->name = $request->get('name');
             $task->save();
 
-            $response = response()->json(['success' => 1, 'data' => $task, 'message' => 'Task ' . $task->id . ' updated successfully.']);
+            $response = response()->json(['success' => 1, 'data' => $task, 'message' => 'Tarea ' . $task->id . ' actualizada correctamente.']);
         }
 
        return $response;
@@ -97,7 +97,7 @@ class TaskController extends Controller
      */
     public function toggleDone(Request $request, $id)
     {
-        $task = $this->tasks->find($id);
+        $task = $this->taskRepository->byId($id);
         $response = null;
         if ($task) {
             $task->done = $request->get('done');
@@ -106,7 +106,7 @@ class TaskController extends Controller
             $response = response()->json([
                 'success' => 1,
                 'data' => $task,
-                'message' => 'Task ' . $task->id . ' updated successfully.',
+                'message' => 'Tarea ' . $task->id . ' actualizada correctamente.',
                 'request' => $request->get('done')
             ]);
         }
@@ -123,15 +123,14 @@ class TaskController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        //$this->authorize('destroy', $task);
-        $task = $this->tasks->find($id);
+        $task = $this->taskRepository->byId($id);
         $response = null;
         if ($task) {
             $task->delete();
-
-            $response = response()->json(['success' => 1, 'data' => $task, 'message' => 'Task ' . $task->id . ' deleted successfully.']);
+            $response = response()->json(['success' => 1, 'data' => $task, 'message' => 'Tarea ' . $task->id . ' borrada exitosamente.']);
         }
 
         return $response;
     }
+
 }
