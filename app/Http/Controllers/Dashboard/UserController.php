@@ -37,6 +37,16 @@ class UserController extends Controller
     }
 
     /**
+     * Show User Registration Form
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create()
+    {
+        return view('dashboard.users.create');
+    }
+
+    /**
      * Register User
      *
      * @param UserRequest $request

@@ -80,6 +80,10 @@ $router->group([
             'uses' => 'UserController@index'
         ]);
 
+        $router->get('create', [
+            'as' => 'create', 'uses' => 'UserController@create' // o.O ?
+        ]);
+
         $router->get('{user}/edit', [
             'as' => 'edit', 'uses' => 'UserController@edit'
         ]);
