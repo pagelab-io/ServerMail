@@ -2,17 +2,19 @@
 
 namespace PageLab\Repositories;
 
+use PageLab\ServerMail\Repositories\BaseRepository;
 use PageLab\ServerMail\User;
 
-class UserRepository
+class UserRepository extends BaseRepository
 {
 
     /**
-     * Get all users
+     * Return the namespace for User Model
      *
-     * @return Collection
+     * @return mixed|string
      */
-    public function search(){
-        return User::all();
+    public function model(){
+        return 'PageLab\ServerMail\User';
     }
+
 }

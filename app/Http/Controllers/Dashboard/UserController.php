@@ -5,11 +5,10 @@ use PageLab\ServerMail\Http\Requests\UserRequest;
 use PageLab\ServerMail\Http\Controllers\Controller;
 use PageLab\ServerMail\User;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use League\Flysystem\Exception;
 
 class UserController extends Controller
 {
+
     /**
      * Constructor method
      */
@@ -24,6 +23,7 @@ class UserController extends Controller
      * @return $this
      */
     public function index(Request $request){
+
         // Retrieve paginate users
         $users = User::orderby('created_at', 'desc');
 
@@ -34,16 +34,6 @@ class UserController extends Controller
         $users = $users->paginate()->appends($request->all());
 
         return view('dashboard.users.index')->with('users', $users);
-    }
-
-    /**
-     * Show User Registration Form
-     *
-     * @return \Illuminate\View\View
-     */
-    public function create()
-    {
-        return view('dashboard.users.create');
     }
 
     /**
@@ -79,17 +69,6 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Update User Profile
      *
      * @param User $user
@@ -113,7 +92,7 @@ class UserController extends Controller
         $user->save();
 
         return redirect('dashboard/users')
-            ->with('status', 'User updated successfully')
+            ->with('status', 'Usuario actualizado correctamente')
             ->with('level', 'success');
     }
 

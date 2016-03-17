@@ -12,7 +12,7 @@
         <div class="grid-header row">
             <div class="col-sm-8 col-xs-6">
                 <a href="{!! route('dashboard.users.create') !!}" class="btn btn-primary">
-                    <i class="fa fa-plus-square"></i> Create New User
+                    <i class="fa fa-plus-square"></i> Crear nuevo usuario
                 </a>
             </div>
             <div class="col-sm-4 col-xs-6">
@@ -42,10 +42,10 @@
                         <thead>
                             <tr>
                                 <th width="50px">ID</th>
-                                <th>User</th>
-                                <th>Email</th>
-                                <th>Status</th>
-                                <th width="120px">Actions</th>
+                                <th>Usuario</th>
+                                <th>Correo</th>
+                                <th>Estatus</th>
+                                <th width="120px">Acciones</th>
                             </tr>
                             </thead>
                         <tbody>
@@ -56,7 +56,7 @@
                                         <a href="{!! route('dashboard.users.edit', $user->id) !!}">{!! $user->name !!}</a>
                                     </td>
                                     <td>{!! $user->email !!}</td>
-                                    <td>{!! $user->active ? 'Active' : 'Inactivo' !!}</td>
+                                    <td>{!! $user->active ? 'Activo' : 'Inactivo' !!}</td>
                                     <td>
                                         <a href="{!! url('dashboard/users/'. $user->id . '/edit') !!}" class="btn btn-default">
                                             <i class="fa fa-edit"></i>

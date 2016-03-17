@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Validator;
 use PageLab\ServerMail\Http\Requests;
 use PageLab\ServerMail\Http\Controllers\Controller;
 use PageLab\ServerMail\Repositories\TaskRepository;
-use PageLab\ServerMail\Task;
 
 class TaskController extends Controller
 {
