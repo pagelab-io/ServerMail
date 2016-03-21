@@ -37,11 +37,11 @@ abstract class BaseRepository implements IBaseRepository{
     abstract function model();
 
     /**
+     * Return Model by each class
      *
      * @return Model
-     * Return Model by each class
      */
-    public function makeModel() {
+    private function makeModel() {
 
         $this->model = $this->app->make($this->model());
 

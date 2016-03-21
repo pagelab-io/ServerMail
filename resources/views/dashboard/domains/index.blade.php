@@ -14,7 +14,7 @@
             <div class="col-sm-8 col-xs-6">
                 <a href="{!! route('dashboard.domains.create') !!}" class="btn btn-primary">
                     <i class="fa fa-plus-square"></i>
-                    Create New Domain
+                    Crear nuevo dominio
                 </a>
             </div>
             <div class="col-sm-4 col-xs-6">
@@ -23,7 +23,7 @@
                         <label class="sr-only" for="txtSearch"></label>
                         <div class="input-group">
                             <div class="md icon input-group-addon"><i class="fa fa-search"></i></div>
-                            <input type="text" class="form-control" name="name" id="txtSearch" placeholder="Search...">
+                            <input type="text" class="form-control" name="name" id="txtSearch" placeholder="Buscar...">
                         </div>
                     </div>
                 </form>
@@ -36,17 +36,17 @@
                     <thead>
                         <tr>
                             <th width="50px">#</th>
-                            <th>Domain</th>
-                            <th width="100px">Status</th>
-                            <th width="100px">Created</th>
-                            <th width="100px">Actions</th>
+                            <th>Dominio</th>
+                            <th width="100px">Estatus</th>
+                            <th width="100px">Creado</th>
+                            <th width="100px">Acciones</th>
                         </tr>
                         </thead>
                     <tbody>
                         @if($domains->isEmpty())
                             <tr>
                                 <td colspan="5">
-                                    <p class="text-center">There is no domain.</p>
+                                    <p class="text-center">No hay dominios.</p>
                                 </td>
                             </tr>
                         @else
@@ -57,13 +57,13 @@
                                         <span>{!! $domain->name !!}</span>
                                         <div class="small">
                                             <a class="link-accounts" href="{!! route('dashboard.domains.accounts', $domain->id) !!}">
-                                                <span>accounts</span>
-                                                <span class="text-danger">{!! '' . $domain->accounts->count() . '' !!}</span>
+                                                <span>Bandejas</span>
+                                                <span class="text-danger">({!! '' . $domain->accounts->count() . '' !!})</span>
                                             </a>
                                             <span>-</span>
                                             <a class="link-aliases" href="{!! route('dashboard.domains.aliases', $domain->id) !!}">
-                                                <span>aliases</span>
-                                                <span class="text-danger">{!! '' . $domain->aliases->count() . '' !!}</span>
+                                                <span>Forwards</span>
+                                                <span class="text-danger">({!! '' . $domain->aliases->count() . '' !!})</span>
                                             </a>
                                         </div>
                                     </td>
@@ -71,7 +71,7 @@
                                         <form action="{!! route('dashboard.domains.toggle', $domain->id) !!}" method="post">
                                             {!! csrf_field() !!}
                                             <button class="btn btn-{!! $domain->status ? 'active' : 'inactive' !!}" type="submit" title="{!! $domain->status == 1 ? 'Switch to inactive' : 'Switch to active' !!}">
-                                                <span>{!! $domain->status ? 'Active' : 'Inactive' !!}</span>
+                                                <span>{!! $domain->status ? 'Activo' : 'Inactivo' !!}</span>
                                             </button>
                                         </form>
 
@@ -107,7 +107,7 @@
                     row = $(this).closest("tr");
 
                 //Show confirm and delete
-                if (confirm('Are you sure! it will be gone permanently.')) {
+                if (confirm('¿ Estas seguro de que quieres borrar el registro ? Esto sera permanente.')) {
                     $.ajax({
                         data: {_token: '{!! csrf_token() !!}'},
                         url: url,

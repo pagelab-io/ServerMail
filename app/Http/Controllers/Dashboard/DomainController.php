@@ -20,18 +20,18 @@ class DomainController extends Controller
      *
      * @var DomainRepository
      */
-    protected $domains;
+    protected $domainRepository;
 
     /**
      * Create a new controller instance.
      *
-     * @param DomainRepository $domains
+     * @param DomainRepository $domainRepository
      */
-    public function __construct(DomainRepository $domains)
+    public function __construct(DomainRepository $domainRepository)
     {
         $this->middleware('auth');
 
-        $this->domains = $domains;
+        $this->domainRepository = $domainRepository;
     }
 
     /**
@@ -82,7 +82,7 @@ class DomainController extends Controller
         $domain->save();
 
         return redirect('dashboard/domains')
-            ->with('status', 'Domain registered successfully')
+            ->with('status', 'Dominio registrado correctamente.')
             ->with('level', 'success');
     }
 

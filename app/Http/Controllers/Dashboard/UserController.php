@@ -63,7 +63,7 @@ class UserController extends Controller
         ]);
 
         return redirect('dashboard/users')
-            ->with('status', 'User registered successfully')
+            ->with('status', 'Usuario registrado correctamente')
             ->with('level', 'success');
     }
 
@@ -120,11 +120,11 @@ class UserController extends Controller
         if ($user) {
 
             if ($user->id == 1) {
-                 return response()->json(['success' => 0, 'message' => 'Can´t delete the user.']);
+                 return response()->json(['success' => 0, 'message' => 'No se puede eliminar al usuario']);
             }
 
             $user->delete();
-            $response = response()->json(['success' => 1, 'message' => 'User deleted successfully.']);
+            $response = response()->json(['success' => 1, 'message' => 'Usuario eliminado correctamente.']);
         }
 
         return $response;

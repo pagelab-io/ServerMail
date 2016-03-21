@@ -4,16 +4,27 @@ namespace PageLab\ServerMail\Repositories;
 
 use PageLab\ServerMail\Domain;
 
-class DomainRepository
+class DomainRepository extends BaseRepository
 {
 
     /**
-     * Get all of the domains
+     * Return the namespace for Task Model
+     *
+     * @return String
+     */
+    function model()
+    {
+        return "PageLab\\ServerMail\\Domain";
+    }
+
+    /**
+     * Get all of the domains by the specified search
      *
      * @param $request
      * @return Collection
      */
-    public function search($request){
+    public function search($request)
+    {
 
         $domains = Domain::paginate(50);
 
