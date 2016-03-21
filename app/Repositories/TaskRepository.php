@@ -3,7 +3,6 @@
 namespace PageLab\ServerMail\Repositories;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use PageLab\ServerMail\User;
 use PageLab\ServerMail\Task;
 

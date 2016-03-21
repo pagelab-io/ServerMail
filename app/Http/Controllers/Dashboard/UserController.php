@@ -1,8 +1,8 @@
 <?php namespace PageLab\ServerMail\Http\Controllers\Dashboard;
 
-use PageLab\ServerMail\Exceptions\CantDeleteUserException;
 use PageLab\ServerMail\Http\Requests\UserRequest;
 use PageLab\ServerMail\Http\Controllers\Controller;
+use PageLab\ServerMail\Repositories\UserRepository;
 use PageLab\ServerMail\User;
 use Illuminate\Http\Request;
 
@@ -10,10 +10,19 @@ class UserController extends Controller
 {
 
     /**
-     * Constructor method
+     * The user repository instance.
+     *
+     * @var UserRepository
      */
-    public function __construct(){
+    protected $userRepository;
+
+    /**
+     * Constructor method
+     * @param UserRepository $userRepository
+     */
+    public function __construct(UserRepository $userRepository){
         $this->middleware('auth');
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -22,17 +31,9 @@ class UserController extends Controller
      * @param Request $request
      * @return $this
      */
-    public function index(Request $request){
-
-        // Retrieve paginate users
-        $users = User::orderby('created_at', 'desc');
-
-        if ($request->get('name')) {
-            $users->where('name', 'like', '%' . $request->get('name') . '%');
-        }
-
-        $users = $users->paginate()->appends($request->all());
-
+    public function index(Request $request)
+    {
+        $users = $this->userRepository->loadUsers($request);
         return view('dashboard.users.index')->with('users', $users);
     }
 
@@ -56,15 +57,18 @@ class UserController extends Controller
     {
         $this->validate($request, ['name' => 'required']);
 
-        User::create([
-            'name'      => $request->get('name'),
-            'email'     => $request->get('email'),
-            'password'  => bcrypt($request->get('password'))
-        ]);
+        $newUser = $this->userRepository->createUser($request);
 
-        return redirect('dashboard/users')
-            ->with('status', 'Usuario registrado correctamente')
-            ->with('level', 'success');
+        if ($newUser instanceof User) {
+            return redirect("dashboard/users")
+                ->with("status", "Usuario registrado correctamente")
+                ->with("level", "success");
+        } else {
+            return redirect('dashboard/users')
+                ->with('status', 'Ocurrio una incidencia al registrar al usuario, intentalo nuevamente')
+                ->with('level', 'warning');
+        }
+
     }
 
     /**
@@ -92,18 +96,22 @@ class UserController extends Controller
             'email'     => 'required|email',
         ]);
 
-        $user->name     = $request->get('name');
-        $user->email    = $request->get('email');
+        $data = ['name' => $request->get('name'), 'email' => $request->get('email')];
 
-        if ($request->get('password') !== '') {
-            $user->password = bcrypt($request->get('password'));
+        if ($request->get('password') !== '')
+            $data['password'] = bcrypt($request->get('password'));
+
+
+        if ($this->userRepository->updateUser($data, $user->id)) {
+            return redirect('dashboard/users')
+                ->with('status', 'Usuario actualizado correctamente')
+                ->with('level', 'success');
+        } else {
+            return redirect('dashboard/users')
+                ->with('status', 'Ocurrio una incidencia al actualizar el registo, intentalo de nuevo')
+                ->with('level', 'warning');
         }
 
-        $user->save();
-
-        return redirect('dashboard/users')
-            ->with('status', 'Usuario actualizado correctamente')
-            ->with('level', 'success');
     }
 
     /**
@@ -113,20 +121,11 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id){
-        // Find Domain
-        $user = User::findOrFail($id);
-        $response = null;
 
-        if ($user) {
-
-            if ($user->id == 1) {
-                 return response()->json(['success' => 0, 'message' => 'No se puede eliminar al usuario']);
-            }
-
-            $user->delete();
-            $response = response()->json(['success' => 1, 'message' => 'Usuario eliminado correctamente.']);
+        if ($this->userRepository->deleteUser($id)) {
+            return response()->json(['success' => 1, 'message' => 'Usuario eliminado correctamente.']);
+        } else {
+            return response()->json(['success' => 0, 'message' => 'No se puede eliminar al usuario']);
         }
-
-        return $response;
     }
 }

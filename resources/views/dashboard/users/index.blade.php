@@ -16,12 +16,12 @@
                 </a>
             </div>
             <div class="col-sm-4 col-xs-6">
-                <form accept-charset="UTF-8" class="form-search" method="get" action="{!! route('dashboard.users.index') !!}" autocomplete="off">
+                <form accept-charset="UTF-8" class="form-search" method="get" action="{{ route('dashboard.users.index') }}" role="search" autocomplete="off">
                     <div class="form-group">
                         <label class="sr-only" for="txtSearch"></label>
                         <div class="input-group">
                             <div class="md icon input-group-addon"><i class="fa fa-search"></i></div>
-                            <input type="search" class="form-control" value="{{Request::get('name')}}" id="txtSearch" placeholder="Search...">
+                            <input type="search" class="form-control" name="name" id="txtSearch" placeholder="Buscar...">
                         </div>
                     </div>
                 </form>

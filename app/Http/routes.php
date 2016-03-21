@@ -81,7 +81,7 @@ $router->group([
         ]);
 
         $router->get('create', [
-            'as' => 'create', 'uses' => 'UserController@create' // o.O ?
+            'as' => 'create', 'uses' => 'UserController@create'
         ]);
 
         $router->get('{user}/edit', [
