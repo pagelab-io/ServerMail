@@ -26,6 +26,7 @@
         vm.init = function() {
             vm.loading = true;
 
+            Task.index()
             Task.index().success(function(response) {
                 console.log('--Tasks--');
                 console.log(response);
@@ -49,21 +50,26 @@
 
             Task.store(newTask).success(function(response) {
 
-                if (response.success == 1 && response.data) {
+                if (response.success == 0 && response.data) {
+                    console.log('[message: ' + response.message + ']');
                     vm.tasks.unshift(response.data);
                     vm.task = '';
                     vm.loading = false;
                 } else {
 
-                    for(var error in response.message) {
-                        if (response.message[error]) {
-                            vm.errors.push(response.message[error][0]);
+                    if (response.message() instanceof Array) {
+                        for (var error in response.message) {
+                            if (response.message[error]) {
+                                vm.errors.push(response.message[error][0]);
+                            }
                         }
+                    } else {
+                        console.log('[message: ' + response.message + ']');
                     }
                 }
 
             }).error(function(r){
-
+                console.log(r);
             });
         };
 
@@ -74,7 +80,7 @@
                 name: task.name
             }).success(function(response) {
                 console.log('[message: ' + response.message + ']');
-                if (response.success == 1) {
+                if (response.success == 0) {
                     vm.loading = false;
                 }
             });
@@ -83,13 +89,11 @@
         vm.toggleDone = function(task){
             vm.loading = true;
 
-            console.log(task);
             Task.toggleDone(task.id, {
                 done: task.done
             }).success(function(response) {
-                console.log(response.request);
-                //console.log('[message: ' + response.message + '  done: '+ response.data.done + ']');
-                if (response.success == 1) {
+                console.log('[message: ' + response.message + '  done: '+ response.data.done + ']');
+                if (response.success == 0) {
                     vm.loading = false;
                 }
             });
@@ -103,13 +107,12 @@
             Task.destroy(task.id)
                 .success(function(response) {
                     console.log('[message: ' + response.message + ']');
-                    if (response.success == 1) {
+                    if (response.success == 0) {
                         vm.tasks.splice(index, 1);
                         vm.loading = false;
                     }
                 });
         };
-
 
         vm.init();
     }

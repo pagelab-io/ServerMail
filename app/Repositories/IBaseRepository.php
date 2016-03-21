@@ -26,4 +26,13 @@ interface IBaseRepository {
      */
     public function byId($id);
 
+    /**
+     * Update the selected record by Id or another attribute.
+     *
+     * @param array $data
+     * @param $id
+     * @return mixed
+     */
+    public function update(array $data, $id);
+
 }

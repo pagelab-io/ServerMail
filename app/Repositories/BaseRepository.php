@@ -41,7 +41,8 @@ abstract class BaseRepository implements IBaseRepository{
      *
      * @return Model
      */
-    private function makeModel() {
+    private function makeModel()
+    {
 
         $this->model = $this->app->make($this->model());
 
@@ -58,7 +59,8 @@ abstract class BaseRepository implements IBaseRepository{
      * @param array $columns
      * @return mixed
      */
-    public function all($columns = array('*')){
+    public function all($columns = array('*'))
+    {
         return $this->model->get($columns);
     }
 
@@ -68,8 +70,21 @@ abstract class BaseRepository implements IBaseRepository{
      * @param $id
      * @return mixed
      */
-    public function byId($id){
+    public function byId($id)
+    {
         return $this->model->findOrFail($id);
+    }
+
+    /**
+     * Update the selected record by Id or another attribute.
+     *
+     * @param array $data
+     * @param $id
+     * @return mixed
+     */
+    public function update(array $data, $id)
+    {
+        return $this->model->where("id","=",$id)->update($data);
     }
 
 } 

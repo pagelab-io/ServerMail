@@ -3,8 +3,8 @@
 namespace PageLab\ServerMail\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
+use Illuminate\Support\Facades\Validator;
 use PageLab\ServerMail\Http\Requests;
 use PageLab\ServerMail\Http\Controllers\Controller;
 use PageLab\ServerMail\Repositories\TaskRepository;
@@ -37,8 +37,17 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
+
+        $response = null;
         $tasks = $this->taskRepository->tasksByUser($request->user());
-        return response()->json(['success'=> 1, 'data' => $tasks]);
+
+        if ($tasks->isEmpty()) {
+            $response = response()->json(['success'=> 0, 'data' => null]);
+        } else {
+            $response = response()->json(['success'=> 0, 'data' => $tasks]);
+        }
+
+        return $response;
     }
 
     /**
@@ -49,46 +58,63 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
+        $response = [];
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255'
         ]);
 
-        if ($validator->fails())
-            return response()->json(['success' => 0, 'data' => null, 'message' => $validator->errors()]);
+        // validator fails
+        if ($validator->fails()) {
+            $response['success'] = -1;
+            $response['data']    = null;
+            $response['message'] = $validator->errors();
+            return response()->json($response);
+        }
 
-        $tasks = $request->user()->tasks();
+        $newTask = $this->taskRepository->createTask($request);
 
-        $newTask = $tasks->create([
-            'name' => $request->name
-        ]);
+        if ($newTask) {
+            $response['success'] = 0;
+            $response['data']    = $newTask;
+            $response['message'] = "La tarea se creo correctamente";
+        } else {
+            $response['success'] = -1;
+            $response['data']    = null;
+            $response['message'] = "Ocurrio una incidencia al crear la tarea";
+        }
 
-        return  response()->json(['success' => 1, 'data' => $newTask, 'message' => 'Tarea creada correctamente.']);;
+        return response()->json($response);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the name in the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateName(Request $request, $id)
     {
-        $response = null;
-        $task = $this->taskRepository->byId($id);
+        $response = [];
+        $data = ['name' => $request->get('name')];
+
+        $task = $this->taskRepository->updateTask($data, $id);
 
         if ($task) {
-            $task->name = $request->get('name');
-            $task->save();
-
-            $response = response()->json(['success' => 1, 'data' => $task, 'message' => 'Tarea ' . $task->id . ' actualizada correctamente.']);
+            $response['success'] = 0;
+            $response['data']    = $task;
+            $response['message'] = "La tarea ".$id." ha sido actualizada correctamente.";
+        } else {
+            $response['success'] = -1;
+            $response['data']    = null;
+            $response['message'] = "Ocurrio una incidencia al actualizar la tarea";
         }
 
-       return $response;
+        return response()->json($response);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the done attribute in the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -96,40 +122,47 @@ class TaskController extends Controller
      */
     public function toggleDone(Request $request, $id)
     {
-        $task = $this->taskRepository->byId($id);
-        $response = null;
-        if ($task) {
-            $task->done = $request->get('done');
-            $task->save();
+        $response = [];
+        $data = ['done' => $request->get('done')];
 
-            $response = response()->json([
-                'success' => 1,
-                'data' => $task,
-                'message' => 'Tarea ' . $task->id . ' actualizada correctamente.',
-                'request' => $request->get('done')
-            ]);
+        $task = $this->taskRepository->updateTask($data, $id);
+
+        if ($task) {
+            $response['success'] = 0;
+            $response['data']    = $task;
+            $response['message'] = "La tarea ".$id." ha sido actualizada correctamente.";
+        } else {
+            $response['success'] = -1;
+            $response['data']    = null;
+            $response['message'] = "Ocurrio una incidencia al actualizar la tarea";
         }
 
-        return $response;
+        return response()->json($response);
     }
 
     /**
      * Destroy the given task.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return Response
+     * @param Request $request
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Request $request, $id)
     {
-        $task = $this->taskRepository->byId($id);
-        $response = null;
-        if ($task) {
-            $task->delete();
-            $response = response()->json(['success' => 1, 'data' => $task, 'message' => 'Tarea ' . $task->id . ' borrada exitosamente.']);
+
+        $response = [];
+
+        if ($this->taskRepository->deleteTask($id)) {
+            $response['success'] = 0;
+            $response['data']    = true;
+            $response['message'] = "La tarea ".$id." ha sido eliminada correctamente.";
+        } else {
+            $response['success'] = -1;
+            $response['data']    = false;
+            $response['message'] = "La tarea ".$id." no se ha podido eliminar ya que no existe en la base de datos.";
         }
 
-        return $response;
+        return response()->json($response);
     }
 
 }
