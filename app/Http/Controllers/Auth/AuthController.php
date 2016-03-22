@@ -26,9 +26,9 @@ class AuthController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    /*public function showLogin(){
-        return view('auth.login');
-    }*/
+    public function showLogin(){
+        return view('welcome');
+    }
 
     /**
      * Este método es llamado por la ruta auth.login para llevar a cabo el proceso de loggin
