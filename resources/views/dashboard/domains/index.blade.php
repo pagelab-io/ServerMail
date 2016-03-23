@@ -80,7 +80,7 @@
                                         {!! date('d-m-Y', strtotime($domain->created_at)) !!}
                                     </td>
                                     <td>
-                                        <a href="{!! url('dashboard/domain/'. $domain->id . '/edit') !!}" class="btn btn-default">
+                                        <a href="{!! url('dashboard/domains/'. $domain->id . '/edit') !!}" class="btn btn-default">
                                             <i class="fa fa-edit"></i>
                                         </a>
 

@@ -41,18 +41,10 @@ class DomainController extends Controller
      */
     public function index(Request $request)
     {
-        $domains = Domain::orderby('created_at', 'desc');
-
-        if (trim($request->get('name')) != '') {
-
-            $name = trim($request->get('name'));
-            $domains->where('name', 'LIKE', '%' . $name . '%');
-        }
-
-        $domains = $domains->paginate();
-
+        $domains = $this->domainRepository->search2($request);
         return view('dashboard.domains.index')
             ->with('domains', $domains);
+
     }
 
     /**
@@ -77,45 +69,19 @@ class DomainController extends Controller
             'name' => 'required'
         ]);
 
-        $domain = new Domain();
-        $domain->name = $request->get('name');
-        $domain->save();
+        $domain = $this->domainRepository->createDomain($request);
 
-        return redirect('dashboard/domains')
-            ->with('status', 'Dominio registrado correctamente.')
-            ->with('level', 'success');
-    }
+        if ($domain instanceof Domain) {
+            return redirect('dashboard/domains')
+                ->with('status', 'Dominio registrado correctamente.')
+                ->with('level', 'success');
+        } else {
+            return redirect('dashboard/domains')
+                ->with('status', 'Ocurrio una incidencia al crear el dominio, vuelve a intentarlo.')
+                ->with('level', 'warning');
+        }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Domain $domain
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Domain $domain, Request $request)
-    {
-        $this->validate($request, [
-            'name'  => 'required'
-        ]);
 
-        $domain->name = $request->get('name');
-        $domain->save();
-
-        return redirect('dashboard/domains')
-            ->with('status', 'Domain updated successfully')
-            ->with('level', 'success');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  Domain  $domain
-     * @return \Illuminate\Http\Response
-     */
-    public function show($domain)
-    {
-        return view('dashboard.domains.show', compact('domain'));
     }
 
     /**
@@ -130,6 +96,32 @@ class DomainController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  Domain $domain
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Domain $domain, Request $request)
+    {
+        $this->validate($request, ['name'  => 'required']);
+
+        $data = ['name' => $request->get('name')];
+        $domain = $this->domainRepository->updateDomain($data, $domain->id);
+
+        if ($domain) {
+            return redirect('dashboard/domains')
+                ->with('status', 'Dominio actualizado correctamente')
+                ->with('level', 'success');
+        } else {
+            return redirect('dashboard/domains')
+                ->with('status', 'Ocurrio una incidencia al realizar la actualización del dominio, vuelve a intentarlo')
+                ->with('level', 'warning');
+        }
+
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -137,17 +129,14 @@ class DomainController extends Controller
      */
     public function destroy($id)
     {
-        // Find Domain
-        $domain = Domain::findOrFail($id);
-        $response = null;
 
-        if ($domain) {
-            $domain->delete();
+        $deleted = $this->domainRepository->deleteDomain($id);
 
-            $response = response()->json(['success' => 1]);
-        }
+        if ($deleted)
+            return response()->json(['success' => 1]);
+        else
+            return response()->json(['success' => -1]);
 
-        return $response;
     }
 
     /**
@@ -157,13 +146,21 @@ class DomainController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function toggle($id){
-        $domain = Domain::findOrFail($id);
-        $domain->status = !$domain->status;
-        $domain->update();
 
-        return redirect()->route('dashboard.domains.index')
-            ->with('status', 'Status domain updated successfully')
-            ->with('level', 'success');;
+        $domain = Domain::findOrFail($id);
+        $data = ['status' => !$domain->status];
+        $domain = $this->domainRepository->updateDomain($data, $id);
+
+        if ($domain) {
+            return redirect()->route('dashboard.domains.index')
+                ->with('status', 'Estatus actualizado correctamente')
+                ->with('level', 'success');
+        } else {
+            return redirect()->route('dashboard.domains.index')
+                ->with('status', 'Ocurrio una incidencia al actualizar el estatus, intentalo nuevamente')
+                ->with('level', 'warning');
+        }
+
     }
 
     /**

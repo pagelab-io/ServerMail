@@ -43,6 +43,6 @@ class DeleteLinuxUser extends Command
             shell_exec("sudo userdel ".$name." 2>&1");
         } else {
             shell_exec("sudo useradd tester -g vmail 2>&1");
-        }
+        } // TODO - quitar esto
     }
 }
