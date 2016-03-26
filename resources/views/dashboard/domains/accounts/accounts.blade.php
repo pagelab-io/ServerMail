@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('.........layouts.master')
 @section('title', 'Dominios')
 
 @section('content')
@@ -14,12 +14,12 @@
 
     <hr/>
 
-    @include('partials.notification')
+    @include('.........partials.notification')
 
     <div class="body">
         <div class="row">
             <div class="col-md-12">
-                @include('common.errors')
+                @include('.........common.errors')
 
                 <section class="accounts">
                     <p>Agregar nueva bandeja</p>
@@ -110,12 +110,11 @@
             $('.accounts a.btn.delete').on('click', function (e) {
                 e.preventDefault();
 
-                var domain_id = $('#domain-id').attr('data-id');
-                var url = '/dashboard/domains/' + domain_id + '/' + $(this).attr('id').replace(/item-/, '') + '/removeAccount',
+                var url = '/dashboard/domains/' + $(this).attr('id').replace(/item-/, '') + '/removeAccount',
                         row = $(this).closest("tr");
 
                 //Show confirm and delete
-                if (confirm('Are you sure! it will be gone permanently.')) {
+                if (confirm('¿ Estas seguro de eliminar la bandeja, esto sera permanente ?')) {
                     $.ajax({
                         data: {_token: '{!! csrf_token() !!}'},
                         url: url,

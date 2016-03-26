@@ -158,11 +158,6 @@ $router->group([
             'uses' => 'DomainController@edit'
         ]);
 
-        $router->get('{domain}/accounts', [
-            'as' => 'accounts',
-            'uses' => 'DomainController@accounts'
-        ]);
-
         $router->post('store', [
             'as' => 'store',
             'uses' => 'DomainController@store'
@@ -181,16 +176,6 @@ $router->group([
         $router->post('{id}', [
             'as' => 'toggle',
             'uses' => 'DomainController@toggle'
-        ]);
-
-        $router->post('{domain}/addAccount', [
-            'as' => 'addAccount',
-            'uses' => 'DomainController@addAccount'
-        ]);
-
-        $router->delete('{domain_id}/{account_id}/removeAccount', [
-            'as' => 'removeAccount',
-            'uses' => 'DomainController@removeAccount'
         ]);
 
     });
@@ -215,6 +200,29 @@ $router->group([
         $router->delete('{alias_id}/removeAlias', [
             'as' => 'removeAlias',
             'uses' => 'AliasController@removeAlias'
+        ]);
+
+    });
+
+    //  Accounts
+    $router->group([
+        'as'     => 'domains.',
+        'prefix' => 'domains'
+    ], function($router) {
+
+        $router->get('{domain}/accounts', [
+            'as' => 'accounts',
+            'uses' => 'AccountController@accounts'
+        ]);
+
+        $router->post('{domain}/addAccount', [
+            'as' => 'addAccount',
+            'uses' => 'AccountController@addAccount'
+        ]);
+
+        $router->delete('{account_id}/removeAccount', [
+            'as' => 'removeAccount',
+            'uses' => 'AccountController@removeAccount'
         ]);
 
     });

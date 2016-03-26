@@ -12,12 +12,11 @@ class AliasController extends Controller
 {
 
     /**
-     * The domain repository instance.
+     * The alias repository instance.
      *
      * @var AliasRepository
      */
     protected $aliasRepository;
-
 
     public function __construct(AliasRepository $aliasRepository)
     {
@@ -80,4 +79,5 @@ class AliasController extends Controller
             return response()->json(['success' => -1, 'message' => 'Ocurrio un error al eliminar el forward.']);
 
     }
+
 }

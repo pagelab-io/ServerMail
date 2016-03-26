@@ -73,22 +73,4 @@ class Account extends Model
         return $this->belongsTo(Domain::class);
     }
 
-    /**
-     * Get the accounts by accountName
-     * by example:
-     * $accountName = support
-     * return:
-     *  [suppor@domain1.com, support@domain2.com]
-     *
-     * @param $accountName
-     * @return mixed
-     */
-    public static function byAccountName($accountName)
-    {
-        $accounts = DB::table('accounts')
-                        ->where('email','like',$accountName."@%")
-                        ->get();
-
-        return $accounts;
-    }
 }

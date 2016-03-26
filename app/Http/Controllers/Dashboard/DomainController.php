@@ -2,12 +2,10 @@
 
 namespace PageLab\ServerMail\Http\Controllers\Dashboard;
 
-use Illuminate\Support\Facades\Artisan;
-use PageLab\ServerMail\Account;
-use PageLab\ServerMail\Domain;
 use PageLab\ServerMail\Repositories\DomainRepository;
-use PageLab\ServerMail\Http\Requests;
 use PageLab\ServerMail\Http\Controllers\Controller;
+use PageLab\ServerMail\Http\Requests;
+use PageLab\ServerMail\Domain;
 use Illuminate\Http\Request;
 
 class DomainController extends Controller
@@ -161,96 +159,4 @@ class DomainController extends Controller
 
     }
 
-
-
-
-
-    // ==== Bandejas ====
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  Domain  $domain
-     * @return \Illuminate\Http\Response
-     */
-    public function accounts($domain)
-    {
-        return view('dashboard.domains.accounts', compact('domain'));
-    }
-
-    /**
-     * Add a new account to domain
-     *
-     * @param Domain $domain
-     * @param Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function addAccount(Domain $domain, Request $request){
-
-        $this->validate($request, [
-            'name' => 'required' // |unique:accounts
-        ]);
-
-        // search for accounts with the same name in email
-        $accounts = Account::byAccountName($request->get('name'));
-
-        // Build new email
-        $email = $request->get('name') . '@' . $domain->name;
-
-        $account = new Account();
-        $account->domain_id = $domain->id;
-        $account->email = trim($email);
-        $account->password = md5(trim($request->get('password')));
-        $account->save();
-
-        // TODO - change this
-        if (count($accounts) == 0) {
-
-            // add a linux user
-            Artisan::call("linuxuser:create",['name' => $request->get('name')]);
-        }
-
-        return redirect()->route('dashboard.domains.accounts', $domain->id)
-            ->with('status', 'Account added successfully')
-            ->with('level', 'success');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $domain_id
-     * @param int $account_id
-     * @return \Illuminate\Http\Response
-     */
-    public function removeAccount($domain_id, $account_id){
-        // Find Domain
-        $account = Account::findOrFail($account_id);
-        $response = null;
-
-        if ($account) {
-
-            // delete the selected account
-            $account->delete();
-
-            // explode the email
-            $explodes = explode('@', $account->email);
-            $name = $explodes[0];
-
-            // search for accounts with the same name in email
-            $accounts = Account::byAccountName($name);
-
-            $response = response()->json(['success' => 1, 'message' => 'Account deleted successfully.', 'accounts' => $accounts]);
-
-            // TODO - change this
-            if (count($accounts) == 0) {
-
-                // delete a linux user
-                Artisan::call("linuxuser:delete",['name' => $name]);
-            }
-
-        }
-
-        return $response;
-    }
 }
