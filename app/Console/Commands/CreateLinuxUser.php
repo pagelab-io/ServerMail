@@ -3,6 +3,7 @@
 namespace PageLab\ServerMail\Console\Commands;
 
 use Illuminate\Console\Command;
+use Log;
 
 class CreateLinuxUser extends Command
 {
@@ -40,7 +41,11 @@ class CreateLinuxUser extends Command
         $name = $this->argument("name");
 
         if ($name != "") {
-            shell_exec("sudo useradd ".$name." -g vmail 2>&1");
+            Log::info("=== The user name is  :: ". $name. " ===");
+            $output = shell_exec("sudo useradd ".$name." -g vmail 2>&1");
+            Log::info("=== Output after useradd command :: ".$output." ===");
+        } else {
+            Log::info("=== The user name is empty ===");
         }
     }
 }

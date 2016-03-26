@@ -41,10 +41,11 @@ class DeleteLinuxUser extends Command
         $name = $this->argument("name");
 
         if ($name != "") {
-
-            Log::info("=== The user name is  :: ". $name. "===");
+            Log::info("=== The user name is  :: ". $name. " ===");
             $output = shell_exec("sudo userdel ".$name." 2>&1");
-            Log::info("=== Output after delete user :: ".$output."===");
+            Log::info("=== Output after userdel command :: ".$output." ===");
+        } else {
+            Log::info("=== The user name is empty ===");
         }
     }
 }
