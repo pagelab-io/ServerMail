@@ -110,12 +110,11 @@
             $('.forwards a.btn.delete').on('click', function (e) {
                 e.preventDefault();
 
-                var domain_id = $('#domain-id').attr('data-id');
-                var url = '/dashboard/domains/' + domain_id + '/' + $(this).attr('id').replace(/item-/, '') + '/removeAlias',
+                var url = '/dashboard/domains/' + $(this).attr('id').replace(/item-/, '') + '/removeAlias',
                         row = $(this).closest("tr");
 
                 //Show confirm and delete
-                if (confirm('Are you sure! it will be gone permanently.')) {
+                if (confirm('¿ Estas seguro de eliminar el forward permanentemente ?')) {
                     $.ajax({
                         data: {_token: '{!! csrf_token() !!}'},
                         url: url,
@@ -125,6 +124,9 @@
                             if (result.success == 1) {
                                 row.fadeOut(200);
                             }
+                        },
+                        error: function (error) {
+                            console.log(error);
                         }
                     })
                 }

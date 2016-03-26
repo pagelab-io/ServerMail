@@ -212,7 +212,7 @@ $router->group([
             'uses' => 'AliasController@addAlias'
         ]);
 
-        $router->delete('{domain_id}/{alias_id}/removeAlias', [
+        $router->delete('{alias_id}/removeAlias', [
             'as' => 'removeAlias',
             'uses' => 'AliasController@removeAlias'
         ]);

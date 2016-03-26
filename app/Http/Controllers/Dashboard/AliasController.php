@@ -22,7 +22,7 @@ class AliasController extends Controller
     public function __construct(AliasRepository $aliasRepository)
     {
         $this->middleware('auth');
-        $this->aliasController = $aliasRepository;
+        $this->aliasRepository = $aliasRepository;
     }
 
     /**
@@ -67,13 +67,12 @@ class AliasController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $domain_id
      * @param int $alias_id
      * @return \Illuminate\Http\Response
      */
-    public function removeAlias($domain_id, $alias_id){
+    public function removeAlias($alias_id){
 
-        $deleted = $this->aliasRepository->deleteDomain($alias_id);
+        $deleted = $this->aliasRepository->deleteAlias($alias_id);
 
         if ($deleted)
             return response()->json(['success' => 1, 'message' => 'Forward eliminado correctamente.']);
