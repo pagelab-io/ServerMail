@@ -40,12 +40,11 @@ class DeleteLinuxUser extends Command
     {
         $name = $this->argument("name");
 
-        Log::info("The user name is ". $name);
-
         if ($name != "") {
-            shell_exec("sudo userdel ".$name." 2>&1");
-        } else {
-            shell_exec("sudo useradd tester -g vmail 2>&1");
-        } // TODO - quitar esto
+
+            Log::info("=== The user name is  :: ". $name. "===");
+            $output = shell_exec("sudo userdel ".$name." 2>&1");
+            Log::info("=== Output after delete user :: ".$output."===");
+        }
     }
 }
