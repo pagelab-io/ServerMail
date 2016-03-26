@@ -16,12 +16,12 @@ $router->group([
     'prefix'     => 'auth'
 ], function($router) {
 
-    // Authentication routes...
+    /*// Authentication routes...   ESTO NO SE PARA QUE RAYOS SERVIA
     $router->get('login', [
         'middleware' => 'guest',
         'as' => 'login',
         'uses' => 'AuthController@showLogin'
-    ]);
+    ]);*/
 
     // metodo que hace el proceso de login
     $router->post('login', [
@@ -59,128 +59,6 @@ $router->group([
     ]);
 });
 
-
-// Protected routes, only logged in user can access
-// Rutas protegidas, solo los usuarios loggeados pueden tener acceso a ellas.
-$router->group([
-    'middleware' => 'auth',
-    'prefix'     => 'dashboard',
-    'namespace'  => 'Dashboard',
-    'as'         => 'dashboard.'
-], function($router) {
-
-    // Users
-    $router->group([
-        'as'     => 'users.',
-        'prefix' => 'users',
-    ], function($router) {
-        // Domains routes
-        $router->get('/', [
-            'as' => 'index',
-            'uses' => 'UserController@index'
-        ]);
-
-        $router->get('create', [
-            'as' => 'create', 'uses' => 'UserController@create'
-        ]);
-
-        $router->get('{user}/edit', [
-            'as' => 'edit', 'uses' => 'UserController@edit'
-        ]);
-
-        $router->post('store', [
-            'as' => 'store', 'uses' => 'UserController@store'
-        ]);
-
-        $router->post('{user}/edit', [
-            'as' => 'update', 'uses' => 'UserController@update'
-        ]);
-
-        $router->delete('{id}/delete', [
-            'as' => 'delete', 'uses' => 'UserController@destroy'
-        ]);
-    });
-
-    // Domains
-    $router->group([
-        'as'     => 'domains.',
-        'prefix' => 'domains',
-    ], function($router) {
-        // Domains routes
-        $router->get('/', [
-            'as' => 'index',
-            'uses' => 'DomainController@index'
-        ]);
-
-        $router->get('search', [
-            'as' => '/',
-            'uses' => 'DomainController@search'
-        ]);
-
-        $router->get('create', [
-            'as' => 'create',
-            'uses' => 'DomainController@create'
-        ]);
-
-        $router->get('{domain}/edit', [
-            'as' => 'edit',
-            'uses' => 'DomainController@edit'
-        ]);
-
-        $router->get('{domain}/accounts', [
-            'as' => 'accounts',
-            'uses' => 'DomainController@accounts'
-        ]);
-
-        $router->get('{domain}/aliases', [
-            'as' => 'aliases',
-            'uses' => 'DomainController@aliases'
-        ]);
-
-        $router->post('store', [
-            'as' => 'store',
-            'uses' => 'DomainController@store'
-        ]);
-
-        $router->post('{domain}/edit', [
-            'as' => 'update',
-            'uses' => 'DomainController@update'
-        ]);
-
-        $router->delete('{id}/delete', [
-            'as' => 'delete',
-            'uses' => 'DomainController@destroy'
-        ]);
-
-        $router->post('{id}', [
-            'as' => 'toggle',
-            'uses' => 'DomainController@toggle'
-        ]);
-
-        $router->post('{domain}/addAccount', [
-            'as' => 'addAccount',
-            'uses' => 'DomainController@addAccount'
-        ]);
-
-        $router->post('{domain}/addAlias', [
-            'as' => 'addAlias',
-            'uses' => 'DomainController@addAlias'
-        ]);
-
-        $router->delete('{domain_id}/{account_id}/removeAccount', [
-            'as' => 'removeAccount',
-            'uses' => 'DomainController@removeAccount'
-        ]);
-
-        $router->delete('{domain_id}/{alias_id}/removeAlias', [
-            'as' => 'removeAlias',
-            'uses' => 'DomainController@removeAlias'
-        ]);
-    });
-});
-
-
-
 // API Route for Public
 $router->group([
     'middleware' => 'auth',
@@ -208,6 +86,137 @@ $router->group([
     ], function($router){
         $router->get('/', 'CommentController@index');
         $router->post('/store', 'CommentController@store');
+    });
+
+});
+
+
+// Protected routes, only logged in user can access
+$router->group([
+    'middleware' => 'auth',
+    'prefix'     => 'dashboard',
+    'namespace'  => 'Dashboard',
+    'as'         => 'dashboard.'
+], function($router) {
+
+    // Users
+    $router->group([
+        'as'     => 'users.',
+        'prefix' => 'users',
+    ], function($router) {
+        // Domains routes
+        $router->get('/', [
+            'as' => 'index',
+            'uses' => 'UserController@index'
+        ]);
+
+        $router->get('create', [
+            'as' => 'create', 'uses' => 'UserController@create' // o.O ?
+        ]);
+
+        $router->get('{user}/edit', [
+            'as' => 'edit', 'uses' => 'UserController@edit'
+        ]);
+
+        $router->post('store', [
+            'as' => 'store', 'uses' => 'UserController@store'
+        ]);
+
+        $router->post('{user}/edit', [
+            'as' => 'update', 'uses' => 'UserController@update'
+        ]);
+
+        $router->delete('{id}/delete', [
+            'as' => 'delete', 'uses' => 'UserController@destroy'
+        ]);
+    });
+
+    // Domains
+    $router->group([
+        'as'     => 'domains.',
+        'prefix' => 'domains',
+    ], function($router) {
+
+        // Domains routes
+        $router->get('/', [
+            'as' => 'index',
+            'uses' => 'DomainController@index'
+        ]);
+
+        $router->get('search', [
+            'as' => '/',
+            'uses' => 'DomainController@search'
+        ]);
+
+        $router->get('create', [
+            'as' => 'create',
+            'uses' => 'DomainController@create'
+        ]);
+
+        $router->get('{domain}/edit', [
+            'as' => 'edit',
+            'uses' => 'DomainController@edit'
+        ]);
+
+        $router->get('{domain}/accounts', [
+            'as' => 'accounts',
+            'uses' => 'DomainController@accounts'
+        ]);
+
+        $router->post('store', [
+            'as' => 'store',
+            'uses' => 'DomainController@store'
+        ]);
+
+        $router->post('{domain}/edit', [
+            'as' => 'update',
+            'uses' => 'DomainController@update'
+        ]);
+
+        $router->delete('{id}/delete', [
+            'as' => 'delete',
+            'uses' => 'DomainController@destroy'
+        ]);
+
+        $router->post('{id}', [
+            'as' => 'toggle',
+            'uses' => 'DomainController@toggle'
+        ]);
+
+        $router->post('{domain}/addAccount', [
+            'as' => 'addAccount',
+            'uses' => 'DomainController@addAccount'
+        ]);
+
+        $router->delete('{domain_id}/{account_id}/removeAccount', [
+            'as' => 'removeAccount',
+            'uses' => 'DomainController@removeAccount'
+        ]);
+
+    });
+
+    // Aliases
+    $router->group([
+        'as'     => 'domains.',
+        'prefix' => 'domains',
+    ], function($router) {
+
+        // Aliases routes
+        $router->get('{domain}/aliases', [
+            'as' => 'aliases',
+            'uses' => 'AliasController@aliases'
+        ]);
+
+        $router->post('{domain}/addAlias', [
+            'as' => 'addAlias',
+            'uses' => 'AliasController@addAlias'
+        ]);
+
+        $router->delete('{domain_id}/{alias_id}/removeAlias', [
+            'as' => 'removeAlias',
+            'uses' => 'AliasController@removeAlias'
+        ]);
+
     });
 
 });

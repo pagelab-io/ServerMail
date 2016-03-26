@@ -4,13 +4,11 @@ namespace PageLab\ServerMail\Http\Controllers\Dashboard;
 
 use Illuminate\Support\Facades\Artisan;
 use PageLab\ServerMail\Account;
-use PageLab\ServerMail\Alias;
 use PageLab\ServerMail\Domain;
 use PageLab\ServerMail\Repositories\DomainRepository;
 use PageLab\ServerMail\Http\Requests;
 use PageLab\ServerMail\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class DomainController extends Controller
 {
@@ -163,6 +161,13 @@ class DomainController extends Controller
 
     }
 
+
+
+
+
+    // ==== Bandejas ====
+
+
     /**
      * Display the specified resource.
      *
@@ -172,17 +177,6 @@ class DomainController extends Controller
     public function accounts($domain)
     {
         return view('dashboard.domains.accounts', compact('domain'));
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  Domain  $domain
-     * @return \Illuminate\Http\Response
-     */
-    public function aliases($domain)
-    {
-        return view('dashboard.domains.aliases', compact('domain'));
     }
 
     /**
@@ -223,32 +217,6 @@ class DomainController extends Controller
     }
 
     /**
-     * Add a new account to domain
-     *
-     * @param Domain $domain
-     * @param Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function addAlias(Domain $domain, Request $request){
-
-        $this->validate($request, [
-            'source' => 'required',
-            'destination' => 'required'
-        ]);
-
-        // Build new email
-        $account = new Alias();
-        $account->domain_id = $domain->id;
-        $account->source = $request->get('source');
-        $account->destination = $request->get('destination');
-        $account->save();
-
-        return redirect()->route('dashboard.domains.aliases', $domain->id)
-            ->with('status', 'Alias added successfully')
-            ->with('level', 'success');
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param int $domain_id
@@ -281,27 +249,6 @@ class DomainController extends Controller
                 Artisan::call("linuxuser:delete",['name' => $name]);
             }
 
-        }
-
-        return $response;
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $domain_id
-     * @param int $alias_id
-     * @return \Illuminate\Http\Response
-     */
-    public function removeAlias($domain_id, $alias_id){
-        // Find Domain
-        $alias = Alias::findOrFail($alias_id);
-        $response = null;
-
-        if ($alias) {
-
-            $alias->delete();
-            $response = response()->json(['success' => 1, 'message' => 'Alias deleted successfully.']);
         }
 
         return $response;

@@ -1,23 +1,23 @@
-@extends('layouts.master')
+@extends('......layouts.master')
 @section('title', 'Dominios')
 
 @section('content')
     <header>
-        <h1>Alias</h1>
-        <p id="domain-id" data-id="{!! $domain->id !!}" >Domain Name: <strong>{{$domain->name}}</strong></p>
+        <h1>Forwards</h1>
+        <p id="domain-id" data-id="{!! $domain->id !!}" >Dominio: <strong>{{$domain->name}}</strong></p>
         <div class="text-right">
             <a href="{{ url('/dashboard/domains') }}" class="btn btn-danger">
-                <i class="fa fa-backward"></i> Back
+                <i class="fa fa-backward"></i> Atras
             </a>
         </div>
     </header>
     <hr/>
-    @include('partials.notification')
+    @include('......partials.notification')
 
     <div class="body">
         <div class="row">
             <div class="col-md-12">
-                @include('common.errors')
+                @include('......common.errors')
 
                 <section class="forwards">
 
@@ -27,23 +27,23 @@
                             <form class="form-horizontal" role="form" method="POST" autocomplete="off" action="{{ route('dashboard.domains.addAlias', $domain) }}">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">Source</label>
+                                    <label class="col-md-4 control-label">Correo de origen</label>
                                     <div class="col-md-8">
-                                        <input type="text" placeholder="Source" class="form-control" name="source" value="{{ old('source') }}">
+                                        <input type="text" placeholder="Correo de origen" class="form-control" name="source" value="{{ old('source') }}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">Destination</label>
+                                    <label class="col-md-4 control-label">Correo de destino</label>
                                     <div class="col-md-8">
-                                        <input type="text" placeholder="Destination" class="form-control" name="destination" value="{{ old('destination') }}">
+                                        <input type="text" placeholder="Correo de destino" class="form-control" name="destination" value="{{ old('destination') }}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-6">
                                         <div class="text-right">
-                                            <button type="submit" class="btn btn-primary">Add new forward</button>
+                                            <button type="submit" class="btn btn-primary">Agregar nuevo forward</button>
                                         </div>
                                     </div>
                                 </div>
@@ -57,16 +57,16 @@
                             <thead>
                             <tr>
                                 <th width="50px">ID</th>
-                                <th>Source</th>
-                                <th>Destination</th>
-                                <th width="100px">Options</th>
+                                <th>Correo fuente</th>
+                                <th>Correo destino</th>
+                                <th width="100px">Opciones</th>
                             </tr>
                             </thead>
                             <tbody>
                             @if($domain->aliases->isEmpty())
                                 <tr>
                                     <th colspan="4">
-                                        <p class="text-center">There is no alias.</p>
+                                        <p class="text-center">No hay forwards.</p>
                                     </th>
                                 </tr>
                             @else
