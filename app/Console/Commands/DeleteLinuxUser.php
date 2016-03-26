@@ -3,6 +3,7 @@
 namespace PageLab\ServerMail\Console\Commands;
 
 use Illuminate\Console\Command;
+use Log;
 
 class DeleteLinuxUser extends Command
 {
@@ -38,6 +39,8 @@ class DeleteLinuxUser extends Command
     public function handle()
     {
         $name = $this->argument("name");
+
+        Log::info("The user name is ". $name);
 
         if ($name != "") {
             shell_exec("sudo userdel ".$name." 2>&1");
