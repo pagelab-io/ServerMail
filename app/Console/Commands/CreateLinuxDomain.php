@@ -146,31 +146,30 @@ class CreateLinuxDomain extends Command{
     {
         Log::info("=== Step 4 :: create the virtual host file for ".$domainName." ===");
 
-        $file = fopen("/etc/apache2/sites-available/".$domainName.".conf", "w");
+        $file = fopen("/var/www/".$domainName."/".$domainName.".conf", "w");
 
-        if (file_exists("/etc/apache2/sites-available/".$domainName.".conf")) {
+        if (file_exists("/var/www/".$domainName."/".$domainName.".conf")) {
 
-            fwrite($file, '
-                    <VirtualHost *:80>
-                        ServerAlias www'.$domainName.'
-                        ServerName '.$domainName.'
-                        ServerAdmin webmaster@localhost
-                        DocumentRoot /var/www/'.$domainName.'/
-                        ErrorLog ${APACHE_LOG_DIR}/error.log
-                        CustomLog ${APACHE_LOG_DIR}/access.log combined
-                    </VirtualHost>');
+            fwrite($file, '<VirtualHost *:80>'.PHP_EOL);
+            fwrite($file, ' ServerAlias www'.$domainName.''.PHP_EOL);
+            fwrite($file, 'ServerName '.$domainName.''.PHP_EOL);
+            fwrite($file, 'ServerAdmin webmaster@localhost'.PHP_EOL);
+            fwrite($file, 'DocumentRoot /var/www/'.$domainName.'/'.PHP_EOL);
+            fwrite($file, 'ErrorLog ${APACHE_LOG_DIR}/error.log'.PHP_EOL);
+            fwrite($file, 'CustomLog ${APACHE_LOG_DIR}/access.log combined'.PHP_EOL);
+            fwrite($file, '</VirtualHost>'.PHP_EOL);
             fclose($file);
             Log::info("virtual host file successfully created");
 
-//            $output = shell_exec("sudo mv /var/www/".$domainName."/".$domainName.".conf /etc/apache2/sites-available 2>&1");
-//            if (file_exists("/etc/apache2/sites-available")) {
-//                Log::info("=== virtual host file moved to /etc/apache2/sites-available ===");
-//                return true;
-//            } else {
-//                Log::info("=== virtual host file cannot be moved to /etc/apache2/sites-available ===");
-//                Log::info($output);
-//                return false;
-//            }
+            $output = shell_exec("sudo mv /var/www/".$domainName."/".$domainName.".conf /etc/apache2/sites-available 2>&1");
+            if (file_exists("/etc/apache2/sites-available")) {
+                Log::info("=== virtual host file moved to /etc/apache2/sites-available ===");
+                return true;
+            } else {
+                Log::info("=== virtual host file cannot be moved to /etc/apache2/sites-available ===");
+                Log::info($output);
+                return false;
+            }
 
         } else {
             Log::info("=== virtual host file cannot be created in /var/www/".$domainName." ===");
