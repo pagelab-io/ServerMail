@@ -3,6 +3,7 @@
 namespace PageLab\ServerMail\Repositories;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use PageLab\ServerMail\Domain;
 
 class DomainRepository extends BaseRepository
@@ -48,10 +49,13 @@ class DomainRepository extends BaseRepository
     {
         $domain = new Domain();
         $domain->name = $request->get('name');
-        $domain->save();
 
         if (!($domain instanceof Domain)) return null;
 
+        // if enviroment isn't local try to create a linux domain
+        if (app()->environment() != 'local') $this->createLinuxDomain($domain->name);
+
+        $domain->save();
         return $domain;
     }
 
@@ -106,5 +110,20 @@ class DomainRepository extends BaseRepository
 
         return $domains;
     }
+
+    //region Private
+
+    /**
+     * Call the command php artisan linuxDomain:create [domain_name]
+     * @param $domainName
+     */
+    private function createLinuxDomain($domainName)
+    {
+
+        // call the command
+        Artisan::call("linuxDomain:create", ['domain_name' => $domainName]);
+    }
+
+    //endregion
 
 }
