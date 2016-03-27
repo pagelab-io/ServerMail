@@ -92,6 +92,8 @@ class CreateLinuxDomain extends Command{
 
     /**
      * Tries to give the necessary permission to the new domain
+     * for the first time the permissions are 777 in order to
+     * create the welcome file.
      *
      * @param $domainName
      * @return bool
@@ -100,10 +102,10 @@ class CreateLinuxDomain extends Command{
     {
         Log::info("=== Step 2 :: givePermissions in /var/www/".$domainName." ===");
 
-        $output = shell_exec("sudo chown -R www-data:www-data /var/www/".$domainName." && sudo chmod -R 775 /var/www/".$domainName." 2>&1");
+        $output = shell_exec("sudo chown -R www-data:www-data /var/www/".$domainName." && sudo chmod -R 777 /var/www/".$domainName." 2>&1");
 
-        // 16893 is the number in fileperms equal to 775
-        if (fileperms("/var/www/".$domainName) == 16893) {
+        // 16895 is the number in fileperms equal to 777
+        if (fileperms("/var/www/".$domainName) == 16895) {
             Log::info("=== Permissions changed succesfully ===");
             return true;
         } else {
