@@ -57,7 +57,8 @@ class CreateLinuxDomain extends Command{
 
             // step 1
             if($this->createDomainDirectory($domainName))
-                Log::info("next step");
+                if($this->givePermissions($domainName))
+                    Log::info("next step");
 
         }
     }
@@ -87,6 +88,23 @@ class CreateLinuxDomain extends Command{
         }
 
     }
+
+    private function givePermissions($domainName){
+        Log::info("=== Step 2 :: givePermissions in /var/www/".$domainName." ===");
+
+        $output = shell_exec("sudo chown -R \$USER:\$USER /var/www/".$domainName." && sudo chmod -R 755 /var/www/".$domainName." 2>&1");
+
+        if (fileperms("/var/www/".$domainName) == 755) {
+            Log::info("=== Permissions changed succesfully ===");
+            return true;
+        } else {
+            Log::info("=== Permissions cannot be changed ===");
+            Log::info($output);
+            return false;
+        }
+
+    }
+
 
     //endregion
 
