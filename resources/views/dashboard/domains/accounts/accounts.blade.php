@@ -4,10 +4,10 @@
 @section('content')
     <header>
         <h1>Bandejas</h1>
-        <p id="domain-id" data-id="{!! $domain->id !!}" >Domain Name: <strong>{{$domain->name}}</strong></p>
+        <p id="domain-id" data-id="{!! $domain->id !!}" >Dominio: <strong>{{$domain->name}}</strong></p>
         <div class="text-right">
             <a href="{{ url('/dashboard/domains') }}" class="btn btn-danger">
-                <i class="fa fa-backward"></i> Back
+                <i class="fa fa-backward"></i> Atras
             </a>
         </div>
     </header>
@@ -28,24 +28,24 @@
                             <form ng-app="domainRegisterApp" ng-controller="DomainRegister" class="form-horizontal" role="form" method="POST" autocomplete="off" action="{{ route('dashboard.domains.addAccount', $domain) }}">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">Name</label>
+                                    <label class="col-md-4 control-label">Correo</label>
                                     <div class="col-md-8">
-                                        <input type="text" ng-model="name" placeholder="Name" class="form-control" name="name" value="{{ old('name') }}">
+                                        <input type="text" ng-model="name" placeholder="Correo" class="form-control" name="name" value="{{ old('name') }}">
                                         <output class="email">@{{name}}{!! '@' . $domain->name!!}</output>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-4 control-label">Password</label>
+                                    <label class="col-md-4 control-label">Contraseña</label>
                                     <div class="col-md-8">
-                                        <input type="password" class="form-control" name="password" placeholder="Password">
+                                        <input type="password" class="form-control" name="password" placeholder="Contraseña">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <div class="col-md-6 col-md-offset-6">
                                         <div class="text-right">
-                                            <button type="submit" class="btn btn-primary">Add new account</button>
+                                            <button type="submit" class="btn btn-primary">Agregar bandeja</button>
                                         </div>
                                     </div>
                                 </div>
@@ -59,15 +59,15 @@
                                 <thead>
                                     <tr>
                                         <th width="50px">ID</th>
-                                        <th>Account</th>
-                                        <th width="100px">Options</th>
+                                        <th>Cuenta</th>
+                                        <th width="100px">Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @if($domain->accounts->isEmpty())
                                         <tr>
                                             <th colspan="3">
-                                                <p class="text-center">There is no account.</p>
+                                                <p class="text-center">No hay bandejas.</p>
                                             </th>
                                         </tr>
                                     @else
