@@ -74,7 +74,7 @@ class CreateLinuxDomain extends Command{
     private function createDomainDirectory($domainName)
     {
         Log::info("=== Step 1 :: creating the domain in /var/www/".$domainName." ===");
-        $output = shell_exec("sudo mkdir -p /var/www/".$domainName." 2>&1");
+        $output = shell_exec("sudo mkdir /var/www/".$domainName." 2>&1");
 
 
         if (file_exists("/var/www/".$domainName)) {
