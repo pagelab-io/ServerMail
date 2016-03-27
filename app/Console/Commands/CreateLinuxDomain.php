@@ -59,7 +59,8 @@ class CreateLinuxDomain extends Command{
             if($this->createDomainDirectory($domainName))
                 if($this->givePermissions($domainName))
                     if($this->createWelcomeFile($domainName))
-                        $this->createVirtualHostFile($domainName);
+                        if($this->createVirtualHostFile($domainName))
+                            Log::info("=== process for a new domain complete successfully===");
 
         }
     }
@@ -145,9 +146,9 @@ class CreateLinuxDomain extends Command{
     {
         Log::info("=== Step 4 :: create the virtual host file for ".$domainName." ===");
 
-        $file = fopen("/etc/apache2/sites-available/".$domainName.".conf", "w");
+        $file = fopen("/var/www/".$domainName.".conf", "w");
 
-        if (file_exists("/etc/apache2/sites-available/".$domainName.".conf")) {
+        if (file_exists("/var/www/".$domainName.".conf")) {
 
             fwrite($file, '
                     <VirtualHost *:80>
@@ -159,9 +160,21 @@ class CreateLinuxDomain extends Command{
                         CustomLog ${APACHE_LOG_DIR}/access.log combined
                     </VirtualHost>');
             fclose($file);
-            Log::info("virtual host file successfully created in /etc/apache2/sites-available");
+            Log::info("virtual host file successfully created");
+
+            $output = shell_exec("sudo mv /var/www/".$domainName."/".$domainName.".conf /etc/apache2/sites-available 2>&1");
+            if (file_exists("/etc/apache2/sites-available")) {
+                Log::info("=== virtual host file moved to /etc/apache2/sites-available ===");
+                return true;
+            } else {
+                Log::info("=== virtual host file cannot be moved to /etc/apache2/sites-available ===");
+                Log::info($output);
+                return false;
+            }
+
         } else {
-            Log::info("virtual host file cannot be created in /etc/apache2/sites-available");
+            Log::info("=== virtual host file cannot be created in /var/www/".$domainName." ===");
+            return false;
         }
     }
 
