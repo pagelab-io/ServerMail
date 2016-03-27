@@ -94,7 +94,7 @@ class CreateLinuxDomain extends Command{
 
         $output = shell_exec("sudo chown -R www-data:www-data /var/www/".$domainName." && sudo chmod -R 775 /var/www/".$domainName." 2>&1");
 
-        if (fileperms("/var/www/".$domainName) == 755) {
+        if (fileperms("/var/www/".$domainName) == 775) {
             Log::info("=== Permissions changed succesfully ===");
             return true;
         } else {
