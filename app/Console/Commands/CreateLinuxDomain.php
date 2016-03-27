@@ -58,7 +58,8 @@ class CreateLinuxDomain extends Command{
             // step 1
             if($this->createDomainDirectory($domainName))
                 if($this->givePermissions($domainName))
-                    Log::info("next step");
+                    if($this->createWelcomeFile($domainName))
+                        Log::info("next step");
 
         }
     }
@@ -89,7 +90,14 @@ class CreateLinuxDomain extends Command{
 
     }
 
-    private function givePermissions($domainName){
+    /**
+     * Tries to give the necessary permission to the new domain
+     *
+     * @param $domainName
+     * @return bool
+     */
+    private function givePermissions($domainName)
+    {
         Log::info("=== Step 2 :: givePermissions in /var/www/".$domainName." ===");
 
         $output = shell_exec("sudo chown -R www-data:www-data /var/www/".$domainName." && sudo chmod -R 775 /var/www/".$domainName." 2>&1");
@@ -103,6 +111,30 @@ class CreateLinuxDomain extends Command{
             return false;
         }
 
+    }
+
+    /**
+     * Create the welcome file in /var/www/[domain_name];
+     * @param $domainName
+     * @return bool
+     */
+    private function createWelcomeFile($domainName)
+    {
+        Log::info("=== Step 3 :: create the welcome file in /var/www/".$domainName." ===");
+
+        $file = fopen("/var/www/".$domainName."/index.html", "w");
+
+        if (file_exists("/var/www/".$domainName."/index")){
+
+            fwrite($file, '<html lang="es-MX"><head><meta charset="UTF-8"><title>welcome</title></head><body>it works !</body></html>');
+            fclose($file);
+            Log::info("=== Welcome file succesfully created in /var/www/".$domainName." ===");
+            return true;
+
+        }else {
+            Log::info("=== Welcome file cannot be created in /var/www/".$domainName." ===");
+            return false;
+        }
     }
 
     //endregion
