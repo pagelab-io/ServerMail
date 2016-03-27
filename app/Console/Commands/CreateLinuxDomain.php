@@ -146,9 +146,9 @@ class CreateLinuxDomain extends Command{
     {
         Log::info("=== Step 4 :: create the virtual host file for ".$domainName." ===");
 
-        $file = fopen("/var/www/".$domainName.".conf", "w");
+        $file = fopen("/var/www/".$domainName."/".$domainName.".conf", "w");
 
-        if (file_exists("/var/www/".$domainName.".conf")) {
+        if (file_exists("/var/www/".$domainName."/".$domainName.".conf")) {
 
             fwrite($file, '
                     <VirtualHost *:80>
