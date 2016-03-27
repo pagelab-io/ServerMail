@@ -127,7 +127,7 @@ class CreateLinuxDomain extends Command{
 
         $file = fopen("/var/www/".$domainName."/index.html", "w");
 
-        if (file_exists("/var/www/".$domainName."/index")){
+        if (file_exists("/var/www/".$domainName."/index.html")){
 
             fwrite($file, '<html lang="es-MX"><head><meta charset="UTF-8"><title>welcome</title></head><body>it works !</body></html>');
             fclose($file);
