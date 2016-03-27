@@ -59,7 +59,7 @@ class CreateLinuxDomain extends Command{
             if($this->createDomainDirectory($domainName))
                 if($this->givePermissions($domainName))
                     if($this->createWelcomeFile($domainName))
-                        Log::info("next step");
+                        $this->createVirtualHostFile($domainName);
 
         }
     }
@@ -131,13 +131,37 @@ class CreateLinuxDomain extends Command{
 
             fwrite($file, '<html lang="es-MX"><head><meta charset="UTF-8"><title>welcome</title></head><body>it works !</body></html>');
             fclose($file);
-            Log::info("=== Welcome file succesfully created in /var/www/".$domainName." ===");
+            Log::info("=== Welcome file successfully created in /var/www/".$domainName." ===");
             return true;
 
         }else {
 
             Log::info("=== Welcome file cannot be created in /var/www/".$domainName." ===");
             return false;
+        }
+    }
+
+    private function createVirtualHostFile($domainName)
+    {
+        Log::info("=== Step 4 :: create the virtual host file for ".$domainName." ===");
+
+        $file = fopen("/etc/apache2/sites-available/".$domainName.".conf", "w");
+
+        if (file_exists("/etc/apache2/sites-available/".$domainName.".conf")) {
+
+            fwrite($file, '
+                    <VirtualHost *:80>
+                        ServerAlias www'.$domainName.'
+                        ServerName '.$domainName.'
+                        ServerAdmin webmaster@localhost
+                        DocumentRoot /var/www/'.$domainName.'/
+                        ErrorLog ${APACHE_LOG_DIR}/error.log
+                        CustomLog ${APACHE_LOG_DIR}/access.log combined
+                    </VirtualHost>');
+            fclose($file);
+            Log::info("virtual host file successfully created in /etc/apache2/sites-available");
+        } else {
+            Log::info("virtual host file cannot be created in /etc/apache2/sites-available");
         }
     }
 
