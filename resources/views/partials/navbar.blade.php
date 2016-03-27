@@ -21,7 +21,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a href="javascript:void(0)" data-target="#" class="dropdown-toggle" data-toggle="dropdown">
-                        Account<b class="caret"></b>
+                        Cuenta<b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="#">{{ Auth::user()->name }}</a></li>
