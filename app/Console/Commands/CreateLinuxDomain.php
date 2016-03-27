@@ -146,8 +146,6 @@ class CreateLinuxDomain extends Command{
                 return false;
             }
 
-
-
         }else {
             Log::info("=== Welcome file cannot be created in /var/www/".$domainName." ===");
             return false;
