@@ -16,12 +16,11 @@ $router->group([
     'prefix'     => 'auth'
 ], function($router) {
 
-    /*// Authentication routes...   ESTO NO SE PARA QUE RAYOS SERVIA
     $router->get('login', [
         'middleware' => 'guest',
         'as' => 'login',
-        'uses' => 'AuthController@showLogin'
-    ]);*/
+        'uses' => 'HomeController@index'
+    ]);
 
     // metodo que hace el proceso de login
     $router->post('login', [
