@@ -132,7 +132,21 @@ class CreateLinuxDomain extends Command{
             fwrite($file, '<html lang="es-MX"><head><meta charset="UTF-8"><title>welcome</title></head><body>it works !</body></html>');
             fclose($file);
             Log::info("=== Welcome file succesfully created in /var/www/".$domainName." ===");
-            return true;
+
+            // change the permissions to 775
+            Log::info("=== Changing permissions to 775 in /var/www/".$domainName." ===");
+            $output = shell_exec("sudo chmod -R 775 /var/www/".$domainName." 2>&1");
+
+            if (fileperms("/var/www/".$domainName) == 16893) {
+                Log::info("=== Permissions changed to 775 in /var/www/".$domainName." ===");
+                return true;
+            }else{
+                Log::info("=== Permissions cannot be changed in /var/www/".$domainName." ===");
+                Log::info($output);
+                return false;
+            }
+
+
 
         }else {
             Log::info("=== Welcome file cannot be created in /var/www/".$domainName." ===");
