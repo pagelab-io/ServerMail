@@ -92,7 +92,7 @@ class CreateLinuxDomain extends Command{
 
     /**
      * Tries to give the necessary permission to the new domain
-     * for the first time the permissions are 777 in order to
+     * for the first time the permissions are 775 in order to
      * create the welcome file.
      *
      * @param $domainName
@@ -102,10 +102,10 @@ class CreateLinuxDomain extends Command{
     {
         Log::info("=== Step 2 :: givePermissions in /var/www/".$domainName." ===");
 
-        $output = shell_exec("sudo chown -R www-data:www-data /var/www/".$domainName." && sudo chmod -R 777 /var/www/".$domainName." 2>&1");
+        $output = shell_exec("sudo chown -R www-data:www-data /var/www/".$domainName." && sudo chmod -R 775 /var/www/".$domainName." 2>&1");
 
-        // 16895 is the number in fileperms equal to 777
-        if (fileperms("/var/www/".$domainName) == 16895) {
+        // 16893 is the number in fileperms equal to 775
+        if (fileperms("/var/www/".$domainName) == 16893) {
             Log::info("=== Permissions changed succesfully ===");
             return true;
         } else {
@@ -132,19 +132,19 @@ class CreateLinuxDomain extends Command{
             fwrite($file, '<html lang="es-MX"><head><meta charset="UTF-8"><title>welcome</title></head><body>it works !</body></html>');
             fclose($file);
             Log::info("=== Welcome file succesfully created in /var/www/".$domainName." ===");
-
-            // change the permissions to 775
-            Log::info("=== Changing permissions to 775 in /var/www/".$domainName." ===");
-            $output = shell_exec("sudo chmod -R 775 /var/www/".$domainName." 2>&1");
-
-            if (fileperms("/var/www/".$domainName) == 16893) {
-                Log::info("=== Permissions changed to 775 in /var/www/".$domainName." ===");
-                return true;
-            }else{
-                Log::info("=== Permissions cannot be changed in /var/www/".$domainName." ===");
-                Log::info($output);
-                return false;
-            }
+            return true;
+//            // change the permissions to 775
+//            Log::info("=== Changing permissions to 775 in /var/www/".$domainName." ===");
+//            $output = shell_exec("sudo chmod -R 775 /var/www/".$domainName." 2>&1");
+//
+//            if (fileperms("/var/www/".$domainName) == 16893) {
+//                Log::info("=== Permissions changed to 775 in /var/www/".$domainName." ===");
+//                return true;
+//            }else{
+//                Log::info("=== Permissions cannot be changed in /var/www/".$domainName." ===");
+//                Log::info($output);
+//                return false;
+//            }
 
         }else {
             Log::info("=== Welcome file cannot be created in /var/www/".$domainName." ===");
