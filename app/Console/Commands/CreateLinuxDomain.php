@@ -10,7 +10,7 @@ namespace PageLab\ServerMail\Console\Commands;
 
 
 use Illuminate\Console\Command;
-
+use Log;
 
 class CreateLinuxDomain extends Command{
 
